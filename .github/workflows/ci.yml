@@ -80,6 +80,10 @@ jobs:
           echo "===== HUGO CONFIG ====="
           hugo config | grep -E "defaultContentLanguage|contentDir|theme"
 
+      - name: Show Hugo Version
+        run: |
+          which hugo
+          hugo version
 
       - name: Build website
         run: |
