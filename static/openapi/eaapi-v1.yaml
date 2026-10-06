@@ -1,0 +1,28 @@
+openapi: 3.0.3
+info:
+  title: eAAPI Platzhalter
+  version: 1.0.0-placeholder
+  description: Technischer Platzhalter. Vor Nutzung durch die freigegebene Spezifikation ersetzen.
+servers:
+  - url: https://example.invalid
+paths:
+  /health:
+    get:
+      summary: Platzhalter für einen Health-Endpunkt
+      operationId: getHealth
+      responses:
+        '200':
+          description: Erfolgreiche Platzhalterantwort
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+components:
+  schemas:
+    Health:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          example: ok

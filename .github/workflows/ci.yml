@@ -1,0 +1,21 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: '1.23.x' }
+      - uses: actions/setup-node@v4
+        with: { node-version: '22', cache: npm }
+      - uses: peaceiris/actions-hugo@v3
+        with: { hugo-version: '0.146.7', extended: true }
+      - run: npm ci
+      - run: python3 -m pip install -r scripts/requirements.txt
+      - run: npm run check

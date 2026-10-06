@@ -1,0 +1,23 @@
+{
+  "name": "rl-digital-api-docs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "hugo server --buildDrafts --disableFastRender",
+    "build": "hugo --gc --minify",
+    "clean": "rm -rf public resources .hugo_build.lock",
+    "fetch:openapi": "python3 scripts/fetch_openapi.py",
+    "validate:openapi": "python3 scripts/validate_openapi.py",
+    "check:content": "python3 scripts/check_content.py",
+    "check": "npm run validate:openapi && npm run check:content && hugo --gc --minify"
+  },
+  "devDependencies": {
+    "autoprefixer": "10.4.21",
+    "postcss": "^8.5.29",
+    "postcss-cli": "^12.0.0",
+    "sass-embedded": "1.93.2"
+  },
+  "workspaces": [
+    "packages/hugoautogen"
+  ]
+}
