@@ -4,17 +4,9 @@ title = "RL Digital API Documentation"
 theme = "docsy"
 
 defaultContentLanguage = "de"
-defaultContentLanguageInSubdir = false
 
 enableRobotsTXT = true
 enableGitInfo = true
-
-[languages]
-  [languages.de]
-    label = "Deutsch"
-    locale = "de-DE"
-    weight = 1
-    contentDir = "content/de"
 
 [params]
   copyright = "RL Digital"
@@ -29,9 +21,6 @@ enableGitInfo = true
     sidebar_search_disable = false
     breadcrumb_disable = false
 
-  [params.mermaid]
-    version = "11.12.0"
-
 [markup]
   [markup.goldmark.renderer]
     unsafe = true
@@ -43,7 +32,7 @@ enableGitInfo = true
 
 [outputs]
   home = ["HTML"]
-  section = ["HTML"]
 
-[security]
-  enableInlineShortcodes = false
+[taxonomies]
+  category = "categories"
+  tag = "tags"
