@@ -69,6 +69,13 @@ jobs:
         run: |
           hugo --gc --minify
 
+      - name: Debug output
+        run: |
+          pwd
+          ls -la
+          ls -la public
+          ls -la public/docs
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
