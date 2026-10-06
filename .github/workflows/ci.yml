@@ -65,9 +65,17 @@ jobs:
         run: |
           npm run check:content
 
+      - name: Show Hugo config
+        run: |
+          cat hugo.toml
+
       - name: Build website
         run: |
           hugo --gc --minify
+
+      - name: Show generated files
+        run: |
+          find public -maxdepth 3 -type f | sort
 
       - name: Debug output
         run: |
