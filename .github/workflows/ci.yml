@@ -89,6 +89,18 @@ jobs:
         run: |
           find public -maxdepth 3 -type f | sort
 
+      - name: Debug site
+        run: |
+          echo "===== INDEX ====="
+          find public -name "index.html"
+
+          echo "===== DOCS ====="
+          find public/docs -type f || true
+
+          echo "===== ALL FILES ====="
+          find public -type f | sort
+
+
       - name: Debug output
         run: |
           pwd
