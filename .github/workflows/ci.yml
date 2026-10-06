@@ -68,6 +68,18 @@ jobs:
       - name: Show Hugo config
         run: |
           cat hugo.toml
+      
+      - name: Debug content
+        run: |
+          echo "===== CONTENT ====="
+          find content -type f | sort
+
+          echo "===== DOCS ====="
+          find content/de/docs -type f | sort || true
+
+          echo "===== HUGO CONFIG ====="
+          hugo config | grep -E "defaultContentLanguage|contentDir|theme"
+
 
       - name: Build website
         run: |
