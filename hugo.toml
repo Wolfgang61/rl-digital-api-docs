@@ -42,7 +42,7 @@ enableGitInfo = true
     lineNos = false
 
 [outputs]
-  home = ["HTML", "RSS", "JSON"]
+  home = ["HTML", "RSS"]
 
 [security]
   enableInlineShortcodes = false
