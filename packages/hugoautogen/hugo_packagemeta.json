@@ -1,10 +1,16 @@
 {
-  "sum": "2ffe9bf0e9c68d0a",
+  "sum": "c36d211caa614f03",
   "dependencySources": {
     "dependencies": {
-      "@fortawesome/fontawesome-free": "docsy/theme",
-      "bootstrap": "docsy/theme"
+      "@fortawesome/fontawesome-free": "docsy",
+      "bootstrap": "docsy"
     },
-    "devDependencies": {}
+    "devDependencies": {
+      "cpy-cli": "docsy",
+      "hugo-extended": "docsy",
+      "netlify-cli": "docsy",
+      "npm-check-updates": "docsy",
+      "prettier": "docsy"
+    }
   }
 }
