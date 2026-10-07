@@ -75,7 +75,7 @@ jobs:
           find content -type f | sort
 
           echo "===== DOCS ====="
-          find content/de/docs -type f | sort || true
+          find content -type f | sort || true
 
           echo "===== HUGO CONFIG ====="
           hugo config | grep -E "defaultContentLanguage|contentDir|theme"
@@ -99,7 +99,7 @@ jobs:
           find public -name "index.html"
 
           echo "===== DOCS ====="
-          find public/docs -type f || true
+          find public -type f || true
 
           echo "===== ALL FILES ====="
           find public -type f | sort
