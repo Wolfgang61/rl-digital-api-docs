@@ -27,19 +27,17 @@ Dieser Proof of Concept bewertet die Eignung von Hugo und Docsy für die Umsetzu
 
 Electronic Author API für die Pflege und Bereitstellung von Produktinformationen.
 
-[Zur eAAPI-Dokumentation]({{
-
-### ecAPI
+[Zur eAAPI-Dokumentation](/rl-digital-apiPI
 
 Consumer API für die Abfrage von Produktinformationen.
 
-[Zur ecAPI-Dokumentation]({{< relref "/apis/ec
+[Zur ecAPI-Dokumentation](/rlpi/
+
+### PAPI
 
 Portal API für Portal- und Verwaltungsfunktionen.
 
-[Zur PAPI-Dokumentation]({{
-
-## Architektur
+[Zur PAPI-Dokumentation](/rl-digital-apiitektur
 
 ```mermaid
 flowchart LR
@@ -49,7 +47,6 @@ flowchart LR
     Hugo --> Docsy
     Docsy --> Website
 ```
-
 
 ## PoC-Ergebnis
 
