@@ -1,0 +1,5 @@
+{{- $id := printf "mermaid-%d" now.UnixNano -}}
+
+<pre class="mermaid" id="{{ $id }}">
+{{ .Inner | safeHTML }}
+</pre>

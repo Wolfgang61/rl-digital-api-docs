@@ -1,17 +1,13 @@
 ---
 title: "RL Digital API Documentation"
-linkTitle: "Start"
+linkTitle: "Home"
 ---
 
 # RL Digital API Documentation
 
-Zentrale Dokumentationsplattform für die APIs der RL-Digital-Landschaft.
+Evaluierung von Hugo + Docsy im Rahmen von DIGIT-2604 zur Neustrukturierung der internen und externen API-Dokumentation.
 
-## Ziele des PoC
-
-Dieser Proof of Concept bewertet die Eignung von Hugo und Docsy für die Umsetzung von DIGIT-2604.
-
-### Bewertete Funktionen
+## Bewertete Funktionen
 
 - OpenAPI-basierte API-Dokumentation
 - Technische und fachliche Dokumentation aus einer Quelle
@@ -25,45 +21,64 @@ Dieser Proof of Concept bewertet die Eignung von Hugo und Docsy für die Umsetzu
 
 ### eAAPI
 
-Electronic Author API für die Pflege und Bereitstellung von Produktinformationen.
+👉 [Zur eAAPI](/rl-digital-api-docs/apis/eaapi/)
 
-[Zur eAAPI-Dokumentation](/rl-digital-apiPI
+### eCAPI
 
-Consumer API für die Abfrage von Produktinformationen.
-
-[Zur ecAPI-Dokumentation](/rlpi/
+👉 [Zur eCAPI](/rl-digital-api-docs/apis/ecapi/)
 
 ### PAPI
 
-Portal API für Portal- und Verwaltungsfunktionen.
+👉 [Zur PAPI](/rl-digital-api-docs/apis/papi)
 
-[Zur PAPI-Dokumentation](/rl-digital-apiitektur
+
+## Architektur
 
 ```mermaid
 flowchart LR
-    OpenAPI --> Hugo
-    Markdown --> Hugo
-    Mermaid --> Hugo
-    Hugo --> Docsy
-    Docsy --> Website
+
+subgraph Sources
+    OA[OpenAPI Specs]
+    MD[Markdown Dokumentation]
+    MM[Mermaid Diagramme]
+end
+
+subgraph Build
+    HU[Hugo]
+    DO[Docsy]
+end
+
+subgraph Deployment
+    GH[GitHub Actions]
+    WS[Dokumentationsportal]
+end
+
+OA --> HU
+MD --> HU
+MM --> HU
+
+HU --> DO
+DO --> GH
+GH --> WS
 ```
 
 ## PoC-Ergebnis
 
 | Kriterium | Status |
-|-----------|--------|
+|-----------|---------|
 | Hugo Evaluation | ✅ |
 | Docsy Evaluation | ✅ |
 | OpenAPI Integration | ✅ |
 | Mermaid Integration | ✅ |
 | Versionskonzept | ✅ |
 | Suchfunktion | ✅ |
-| Zielhosting bewertet | ✅ |
-| Zugriffsschutz bewertet | ✅ |
+| Hosting | ✅ |
+| CI/CD | ✅ |
 
 ## Nächste Schritte
 
-1. Fachliche Inhalte vervollständigen
-2. Versionierte API-Dokumentation erweitern
-3. Produktives Zielhosting auswählen
-4. Governance und Freigabeprozess definieren
+1. Versionierung fertigstellen
+2. OpenAPI-Automatisierung integrieren
+3. GitHub Actions vervollständigen
+4. Hosting-Konzept dokumentieren
+5. Architekturentscheidung für DIGIT-2604 vorbereiten

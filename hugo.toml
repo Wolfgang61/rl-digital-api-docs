@@ -10,13 +10,13 @@ enableGitInfo = true
 
 [params]
   copyright = "RL Digital"
-
   github_repo = "https://github.com/Wolfgang61/rl-digital-api-docs"
   github_project_repo = "https://github.com/Wolfgang61/rl-digital-api-docs"
 
   offlineSearch = true
 
   [params.ui]
+    
     sidebar_menu_compact = true
     sidebar_search_disable = false
     breadcrumb_disable = false

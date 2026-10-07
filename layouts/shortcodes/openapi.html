@@ -1,8 +1,5 @@
-{{- $spec := .Get "spec" -}}
-{{- $id := .Get "id" | default "openapi-reference" -}}
-{{- if not $spec -}}{{ errorf "openapi shortcode requires spec parameter: %s" .Position }}{{- end -}}
-<div id="{{ $id }}" class="openapi-reference">
-  <redoc spec-url="{{ $spec | relURL }}" hide-download-button="false"></redoc>
-</div>
-<script src="https://cdn.redoc.ly/redoc/v2.5.0/bundles/redoc.standalone.js" crossorigin="anonymous"></script>
-<noscript>Für die interaktive OpenAPI-Ansicht muss JavaScript aktiviert sein. Die Spezifikation kann direkt heruntergeladen werden.</noscript>
+<div id="{{ .Get "id" }}"></div>
+
+<redoc spec-url="{{ .Get "spec" }}"></redoc>
+
+<script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
