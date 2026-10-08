@@ -6,24 +6,24 @@ Never duplicate information from OpenAPI.
 
 ## Principle 2
 
-Generate technical endpoint documentation automatically.
+Generate endpoint documentation automatically.
 
 ## Principle 3
 
-Write conceptual documentation manually.
+Write conceptual content manually.
 
 ## Principle 4
 
-Prefer Markdown over custom HTML.
+Prefer Markdown over HTML.
 
 ## Principle 5
 
-Use reusable Hugo shortcodes.
+Prefer Hugo components over custom JavaScript.
 
 ## Principle 6
 
-Documentation must be mobile friendly.
+Keep navigation shallow and intuitive.
 
 ## Principle 7
 
-Internal and external views should use the same content model.
+Documentation must be maintainable by non-developers.

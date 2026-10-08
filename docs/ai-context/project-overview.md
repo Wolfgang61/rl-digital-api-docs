@@ -1,26 +1,17 @@
 # RL Digital API Documentation Platform
 
-## Purpose
+## Mission
 
-Central platform for internal and external API documentation.
+Provide a central platform for all API documentation.
 
 ## Goals
 
 - Single source of truth
-- Automated publication
-- Version-controlled documentation
-- OpenAPI-first approach
-- Consistent developer experience
+- Automated publishing
+- Consistent API documentation
 - Reduced maintenance effort
 - Reduced support effort
-
-## Existing Standards
-
-- OpenAPI 3.x
-- Swagger UI
-- Markdown
-- GitHub
-- Hugo + Docsy
+- Improved developer experience
 
 ## Target Groups
 
@@ -28,11 +19,10 @@ Central platform for internal and external API documentation.
 
 - Developers
 - Architects
-- Support Teams
 - Operations
+- Support
 
 ### External
 
 - Partners
-- Customers
 - API Consumers

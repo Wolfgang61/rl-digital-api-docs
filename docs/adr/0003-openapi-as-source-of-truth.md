@@ -1,8 +1,4 @@
-# ADR-0003
-
-## Title
-
-OpenAPI as Source of Truth
+# ADR-0001
 
 ## Status
 
@@ -10,10 +6,10 @@ Accepted
 
 ## Decision
 
-All API endpoint information originates from OpenAPI specifications.
+OpenAPI specifications are the single source of truth for all API endpoint information.
 
 ## Consequences
 
-- No manual endpoint documentation
-- Swagger UI generated automatically
-- Reduced maintenance effort
+- Endpoint documentation is generated.
+- Swagger UI is generated from OpenAPI.
+- Manual endpoint descriptions are avoided.

@@ -2,39 +2,32 @@
 
 ## BR-001
 
-Documentation must be maintained in Git.
+All API documentation shall be maintained in Git.
 
 ## BR-002
 
-OpenAPI specifications remain the authoritative API definition.
+OpenAPI remains the authoritative API specification.
 
 ## BR-003
 
-Swagger UI must remain available.
+Swagger UI remains available.
 
 ## BR-004
 
-Internal and external documentation must share the same platform.
+Internal and external documentation share a common platform.
 
 ## BR-005
 
-Documentation publishing must be automated.
+Publishing shall be automated using GitHub Actions.
 
 ## BR-006
 
-All APIs must follow a standardized structure.
+Documentation shall support versioning.
 
 ## BR-007
 
-Documentation must support versioning.
+Documentation shall follow a standardized information architecture.
 
 ## BR-008
 
-Documentation shall include:
-
-- Overview
-- Authentication
-- Endpoints
-- Examples
-- Error Handling
-- Change Log
+Documentation shall be searchable.
