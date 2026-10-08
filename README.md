@@ -5,20 +5,29 @@ Vollständige Hugo-und-Docsy-Vorlage für DIGIT-2604. Sie kombiniert technische 
 ## Voraussetzungen
 
 - Git
-- Go 1.23 oder neuer
-- Node.js 22 oder neuer
-- Hugo Extended 0.146 oder neuer
+- Go 1.22 oder neuer
+- Node.js 22.12 oder neuer
+- Hugo Extended 0.147.5
+
+Docsy wird als versioniertes Hugo Module eingebunden. Ein lokaler Theme-Checkout
+oder ein Git-Submodul ist nicht erforderlich.
 
 ## Schnellstart unter WSL
 
 ```bash
-unzip rl-digital-api-docs.zip
+git clone https://github.com/Wolfgang61/rl-digital-api-docs.git
 cd rl-digital-api-docs
+hugo mod verify
 npm ci
 npm run dev
 ```
 
 Danach die lokale Hugo-Adresse öffnen, standardmäßig `http://localhost:1313/rl-digital-api-docs/`.
+
+`hugo mod verify` lädt die in `go.mod` festgeschriebene Docsy-Version in den
+globalen Hugo-Modul-Cache und prüft sie gegen `go.sum`. `npm ci` installiert
+anschließend exakt die in `package-lock.json` festgeschriebenen Frontend-
+Abhängigkeiten.
 
 ## OpenAPI-Spezifikationen aktualisieren
 
@@ -36,9 +45,13 @@ npm run check
 npm run build
 ```
 
+`npm run check` validiert die OpenAPI-Dateien und Markdown-Inhalte und führt
+einen Produktionsbuild aus. `npm run build` erstellt die veröffentlichbare Site
+unter `public/`.
+
 ## GitHub Pages
 
-In GitHub unter `Settings > Pages > Build and deployment` die Quelle `GitHub Actions` wählen. Der Workflow `.github/workflows/pages.yml` baut und veröffentlicht die Seite. Für ein anderes Repository den `baseURL`-Wert in `hugo.toml` oder im Workflow anpassen.
+In GitHub unter `Settings > Pages > Build and deployment` die Quelle `GitHub Actions` wählen. Der Workflow `.github/workflows/ci.yml` prüft, baut und veröffentlicht die Seite. Für ein anderes Repository den `baseURL`-Wert in `hugo.toml` oder im Workflow anpassen.
 
 ## Zielhosting und Zugriffsschutz
 

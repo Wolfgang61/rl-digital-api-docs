@@ -31,7 +31,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.22'
+          go-version-file: 'go.mod'
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -41,21 +41,20 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: '0.167.0'
+          hugo-version: '0.147.5'
           extended: true
 
       - name: Install Python dependencies
         run: |
           python3 -m pip install -r scripts/requirements.txt
 
+      - name: Verify Hugo modules
+        run: |
+          hugo mod verify
+
       - name: Install NPM dependencies
         run: |
-          npm install
-
-      - name: Sync Hugo NPM dependencies
-        run: |
-          hugo mod npm pack
-          npm install
+          npm ci
 
       - name: Validate OpenAPI specs
         run: |
