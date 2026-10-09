@@ -3,17 +3,17 @@
     {
       "name": "eAAPI v1",
       "url": "https://qa-digital.systems-tooling.de/docs/eaapi.json",
-      "target": "static/openapi/eaapi-v1.yaml"
+      "target": "static/openapi/eaapi-v1.json"
     },
     {
       "name": "eCAPI v1",
       "url": "https://qa-digital.systems-tooling.de/docs/ecapi/v1/ecapi.json",
-      "target": "static/openapi/ecapi-v1.yaml"
+      "target": "static/openapi/ecapi-v1.json"
     },
     {
       "name": "eCAPI v2",
       "url": "https://qa-digital.systems-tooling.de/docs/ecapi/v2/ecapi.json",
-      "target": "static/openapi/ecapi-v2.yaml"
+      "target": "static/openapi/ecapi-v2.json"
     }
   ]
 }

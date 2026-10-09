@@ -13,7 +13,7 @@ Electronic Author API für die Pflege und Bereitstellung von Produktinformatione
 
 nsumer API für die Abfrage von Produktinformationen.
 
-👉 [Zur eCAPI](/rl-docs/apis/ecapi/
+👉 [Zur eCAPI](/rl-digital-api-docs/apis/ecapi/)
 
 ### PAPI
 

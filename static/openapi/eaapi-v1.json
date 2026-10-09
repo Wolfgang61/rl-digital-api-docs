@@ -1,0 +1,887 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentation for eAAPI",
+        "description": "eAAPI is the API for submitting ePILs (electronic Product Information Leaflets) that conform with the FHIR Implementation Guide found at [https://fhir.pharmaprotect.de/digital/epil-fhir-ig/](https://fhir.pharmaprotect.de/digital/epil-fhir-ig/)",
+        "version": "1.0.1",
+        "x-build": null
+    },
+    "servers": [
+        {
+            "url": "https://qa-digital.systems-tooling.de",
+            "description": "API over HTTPS"
+        }
+    ],
+    "paths": {
+        "/eaapi/v1/pil/create": {
+            "post": {
+                "tags": [
+                    "Upload (async)"
+                ],
+                "summary": "Submit ePIL (async)",
+                "description": "(UC05-002) Users upload electronic product information leaflets (ePILs) according to FHIR specification. After a successful upload the endpoint redirects to the upload-status endpoint. Store the requestId `_id.id` from the response \u2014 it is required to poll the upload-status endpoint for the final processing result.",
+                "externalDocs": {
+                    "description": "UC05-002 (internal documentation)",
+                    "url": "https://nma-s-confluence.arvato-systems.de/x/H6QvJQ"
+                },
+                "operationId": "post_v1-pil-asset-create",
+                "requestBody": {
+                    "description": "The ePIL asset to create",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "properties": {
+                                    "file": {
+                                        "description": "The file to upload",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted \u2014 ePIL queued for async processing. Use `_id.id` to poll the upload-status endpoint for the final result.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                },
+                                "example": {
+                                    "_id": {
+                                        "id": "b4f1f7f0-bfb9-e322-0293-3b8c1ce4481a"
+                                    },
+                                    "status": "processing",
+                                    "intent": "order",
+                                    "focus": {
+                                        "reference": "DocumentReference/b4f1f7f0-bfb9-e322-0293-3b8c1ce4481a"
+                                    },
+                                    "resourceType": "Task"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationOutcome"
+                                },
+                                "example": {
+                                    "issue": [
+                                        {
+                                            "severity": "error",
+                                            "code": "invalid",
+                                            "details": {
+                                                "coding": [
+                                                    {
+                                                        "code": "File cannot be empty."
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "resourceType": "OperationOutcome"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                },
+                                "example": {
+                                    "success": false,
+                                    "message": "The resource owner or authorization server denied the request."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                },
+                                "example": {
+                                    "success": false,
+                                    "message": "Access denied. Your client account is not authorized to submit ePILs."
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/eaapi/v1/pil/create-sync": {
+            "post": {
+                "tags": [
+                    "Upload (sync)"
+                ],
+                "summary": "Submit ePIL (sync)",
+                "description": "(UC05-015) Upload an ePIL and receive the final processing result synchronously \u2014 no polling required. Unlike the async create endpoint, this call blocks until processing completes. Access is restricted; contact the platform team to request enablement.",
+                "externalDocs": {
+                    "description": "UC05-015 (internal documentation)",
+                    "url": "https://nma-s-confluence.arvato-systems.de/x/cAO5LQ"
+                },
+                "operationId": "post_v1-pil-asset-create-sync",
+                "requestBody": {
+                    "description": "The ePIL asset to create",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "properties": {
+                                    "file": {
+                                        "description": "The file to upload",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Processing complete. Check the `status` field \u2014 `success` indicates a successful import; any other value indicates a processing error (also returned with HTTP 200).",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                },
+                                "example": {
+                                    "_id": {
+                                        "id": "4ab80beb-115b-61a1-39d0-3ec72259d387"
+                                    },
+                                    "status": "success",
+                                    "intent": "order",
+                                    "focus": {
+                                        "reference": "DocumentReference/4ab80beb-115b-61a1-39d0-3ec72259d387"
+                                    },
+                                    "output": [
+                                        {
+                                            "type": {
+                                                "text": "businessId"
+                                            },
+                                            "valueCoding": {
+                                                "system": "http://pharmaprotect.de/digital/epil",
+                                                "code": "8a3f6502-db6e-5afb-b701-54395df701d9"
+                                            }
+                                        },
+                                        {
+                                            "type": {
+                                                "text": "medicinalProductId"
+                                            },
+                                            "valueCoding": {
+                                                "system": "http://pharmaprotect.de/digital/epil/medicinal-product-definition",
+                                                "code": "f29661b7-672d-588b-874d-bf1b228d6127"
+                                            }
+                                        },
+                                        {
+                                            "type": {
+                                                "text": "medicinalProductId"
+                                            },
+                                            "valueCoding": {
+                                                "system": "http://pharmaprotect.de/digital/epil/medicinal-product-definition",
+                                                "code": "b75b2f26-b602-5e6e-8b71-77360e41519b"
+                                            }
+                                        }
+                                    ],
+                                    "resourceType": "Task"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request or processing failure",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationOutcome"
+                                },
+                                "example": {
+                                    "issue": [
+                                        {
+                                            "severity": "error",
+                                            "code": "invalid",
+                                            "details": {
+                                                "coding": [
+                                                    {
+                                                        "code": "File cannot be empty."
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "resourceType": "OperationOutcome"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                },
+                                "example": {
+                                    "success": false,
+                                    "message": "The resource owner or authorization server denied the request."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                },
+                                "example": {
+                                    "success": false,
+                                    "message": "Access denied. Your client account is not authorized to use the synchronous upload endpoint."
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/eaapi/v1/pil/upload-status/{requestId}": {
+            "get": {
+                "tags": [
+                    "Upload (async)"
+                ],
+                "summary": "Poll ePIL upload status",
+                "description": "(UC05-003) Get status of an ePIL upload by requestId. Note: processing errors (e.g. unknown requestId) are also returned with HTTP 200 \u2014 always check the `status` field in the response body.",
+                "externalDocs": {
+                    "description": "UC05-003 (internal documentation)",
+                    "url": "https://nma-s-confluence.arvato-systems.de/x/O6QvJQ"
+                },
+                "operationId": "get_v1-pil-upload-status",
+                "parameters": [
+                    {
+                        "name": "requestId",
+                        "in": "path",
+                        "description": "The `_id.id` value returned by the `/eaapi/v1/pil/create` response.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Upload status retrieved. Also returned for errors \u2014 check the `status` field.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                },
+                                "examples": {
+                                    "success": {
+                                        "summary": "Success",
+                                        "value": {
+                                            "_id": {
+                                                "id": "9fba01ee-171e-cca1-040f-ab17b4167a19"
+                                            },
+                                            "status": "success",
+                                            "intent": "order",
+                                            "focus": {
+                                                "reference": "DocumentReference/9fba01ee-171e-cca1-040f-ab17b4167a19"
+                                            },
+                                            "output": [
+                                                {
+                                                    "type": {
+                                                        "text": "businessId"
+                                                    },
+                                                    "valueCoding": {
+                                                        "system": "http://pharmaprotect.de/digital/epil",
+                                                        "code": "8a3f6502-db6e-5afb-b701-54395df701d9"
+                                                    }
+                                                },
+                                                {
+                                                    "type": {
+                                                        "text": "medicinalProductId"
+                                                    },
+                                                    "valueCoding": {
+                                                        "system": "http://pharmaprotect.de/digital/epil/medicinal-product-definition",
+                                                        "code": "f29661b7-672d-588b-874d-bf1b228d6127"
+                                                    }
+                                                },
+                                                {
+                                                    "type": {
+                                                        "text": "medicinalProductId"
+                                                    },
+                                                    "valueCoding": {
+                                                        "system": "http://pharmaprotect.de/digital/epil/medicinal-product-definition",
+                                                        "code": "b75b2f26-b602-5e6e-8b71-77360e41519b"
+                                                    }
+                                                }
+                                            ],
+                                            "resourceType": "Task"
+                                        }
+                                    },
+                                    "error": {
+                                        "summary": "Error (e.g. unknown request ID)",
+                                        "value": {
+                                            "_id": {
+                                                "id": "123456"
+                                            },
+                                            "contained": [
+                                                {
+                                                    "issue": [
+                                                        {
+                                                            "severity": "error",
+                                                            "code": "exception",
+                                                            "details": {
+                                                                "coding": [
+                                                                    {
+                                                                        "code": "No valid pil found for ID 123456"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ],
+                                                    "resourceType": "OperationOutcome"
+                                                }
+                                            ],
+                                            "status": "failed",
+                                            "statusReason": {
+                                                "concept": {
+                                                    "text": "No valid pil found for ID 123456"
+                                                }
+                                            },
+                                            "intent": "order",
+                                            "focus": {
+                                                "reference": "DocumentReference/123456"
+                                            },
+                                            "resourceType": "Task"
+                                        }
+                                    },
+                                    "exception-no-company": {
+                                        "summary": "Exception (e.g. no company found for ORG-ID)",
+                                        "value": {
+                                            "_id": {
+                                                "id": "5ea377b4-2f7f-7f2d-c30f-9d5901e51ad3"
+                                            },
+                                            "status": "exception",
+                                            "statusReason": {
+                                                "concept": {
+                                                    "text": "PIL (040054-1-5ea377b4-2f7f-7f2d-c30f-9d5901e51ad3-1779458789) moved into failed workflow, because \"Process \"conversion\" failed for PIL 040054-1-5ea377b4-2f7f-7f2d-c30f-9d5901e51ad3-1779458789, because no MAH company found for ORG-ID \"ORG-100000xxxx04\".\"."
+                                                }
+                                            },
+                                            "intent": "order",
+                                            "focus": {
+                                                "reference": "DocumentReference/5ea377b4-2f7f-7f2d-c30f-9d5901e51ad3"
+                                            },
+                                            "resourceType": "Task"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                },
+                                "example": {
+                                    "success": false,
+                                    "message": "The resource owner or authorization server denied the request."
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                },
+                                "example": {
+                                    "success": false,
+                                    "message": "Access denied. Your client account is not authorized to check this upload status."
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/eaapi/v1/pil/lock/{businessId}": {
+            "patch": {
+                "tags": [
+                    "Misc"
+                ],
+                "summary": "Lock ePIL",
+                "description": "(UC05-004) Locks an ePIL identified by businessId.",
+                "operationId": "patch_v1-pil-lock",
+                "parameters": [
+                    {
+                        "name": "businessId",
+                        "in": "path",
+                        "description": "The businessId of the ePIL to lock",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lock action was successful (including idempotent no-op for already locked ePILs).",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationOutcome"
+                                },
+                                "example": {
+                                    "resourceType": "OperationOutcome",
+                                    "issue": [
+                                        {
+                                            "severity": "information",
+                                            "code": "success",
+                                            "diagnostics": "ePIL locked successfully. Workflow status: Locked. success=true."
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                },
+                                "example": {
+                                    "success": false,
+                                    "message": "The authorization token is missing"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationOutcome"
+                                },
+                                "example": {
+                                    "issue": [
+                                        {
+                                            "severity": "error",
+                                            "code": "forbidden",
+                                            "details": {
+                                                "coding": [
+                                                    {
+                                                        "code": "Only authorized eAAPI clients can lock ePILs."
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "resourceType": "OperationOutcome"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationOutcome"
+                                },
+                                "example": {
+                                    "issue": [
+                                        {
+                                            "severity": "error",
+                                            "code": "exception",
+                                            "details": {
+                                                "coding": [
+                                                    {
+                                                        "code": "No ePIL found for internalBusinessId \"does_not_exist\"."
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "resourceType": "OperationOutcome"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationOutcome"
+                                },
+                                "example": {
+                                    "issue": [
+                                        {
+                                            "severity": "error",
+                                            "code": "business-rule",
+                                            "details": {
+                                                "coding": [
+                                                    {
+                                                        "code": "Cannot lock ePIL: it is not in a lockable workflow state."
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ],
+                                    "resourceType": "OperationOutcome"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/eaapi/token": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Obtain access token",
+                "description": "(UC05-001) Create an OAuth2 access token for eAAPI.",
+                "externalDocs": {
+                    "description": "UC05-001 (internal documentation)",
+                    "url": "https://nma-s-confluence.arvato-systems.de/x/gKIvJQ"
+                },
+                "operationId": "post_oauth2_eaapi_token",
+                "requestBody": {
+                    "description": "OAuth2 token request",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            },
+                            "example": {
+                                "grant_type": "client_credentials",
+                                "client_id": "client_id",
+                                "client_secret": "client_secret"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OAuth2 access token created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "token_type": "Bearer",
+                                    "expires_in": 3600,
+                                    "access_token": "access_token"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "error": "invalid_request",
+                                    "error_description": "The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed.",
+                                    "hint": "Check the `client_id` parameter",
+                                    "message": "The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed."
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "error": "invalid_client",
+                                    "error_description": "Client authentication failed.",
+                                    "message": "Client authentication failed."
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ErrorResponse": {
+                "required": [
+                    "success",
+                    "message"
+                ],
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "The resource owner or authorization server denied the request."
+                    }
+                },
+                "type": "object"
+            },
+            "OperationOutcome": {
+                "description": "FHIR OperationOutcome resource (subset used by this API).",
+                "required": [
+                    "resourceType",
+                    "issue"
+                ],
+                "properties": {
+                    "resourceType": {
+                        "type": "string",
+                        "example": "OperationOutcome"
+                    },
+                    "issue": {
+                        "type": "array",
+                        "items": {
+                            "required": [
+                                "severity",
+                                "code"
+                            ],
+                            "properties": {
+                                "severity": {
+                                    "type": "string",
+                                    "enum": [
+                                        "fatal",
+                                        "error",
+                                        "warning",
+                                        "information"
+                                    ],
+                                    "example": "error"
+                                },
+                                "code": {
+                                    "type": "string",
+                                    "example": "exception"
+                                },
+                                "details": {
+                                    "properties": {
+                                        "coding": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "code": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "diagnostics": {
+                                    "description": "Human-readable message (used in success responses, e.g. lock endpoint).",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Task": {
+                "description": "FHIR Task resource (subset used by this API). The `status` field determines which optional fields are present.",
+                "required": [
+                    "_id",
+                    "status",
+                    "intent",
+                    "focus",
+                    "resourceType"
+                ],
+                "properties": {
+                    "_id": {
+                        "required": [
+                            "id"
+                        ],
+                        "properties": {
+                            "id": {
+                                "description": "Request identifier. Use as the `requestId` parameter when polling the upload-status endpoint.",
+                                "type": "string",
+                                "example": "9fba01ee-171e-cca1-040f-ab17b4167a19"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "status": {
+                        "description": "Current processing state. Errors are also returned with HTTP 200 \u2014 always check this field.",
+                        "type": "string",
+                        "enum": [
+                            "processing",
+                            "success",
+                            "failed",
+                            "exception"
+                        ],
+                        "example": "success"
+                    },
+                    "intent": {
+                        "type": "string",
+                        "example": "order"
+                    },
+                    "focus": {
+                        "properties": {
+                            "reference": {
+                                "type": "string",
+                                "example": "DocumentReference/9fba01ee-171e-cca1-040f-ab17b4167a19"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "resourceType": {
+                        "type": "string",
+                        "example": "Task"
+                    },
+                    "output": {
+                        "description": "Present when `status` is `success`. Contains the assigned businessId and medicinalProductId values.",
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "type": {
+                                    "properties": {
+                                        "text": {
+                                            "type": "string",
+                                            "enum": [
+                                                "businessId",
+                                                "medicinalProductId"
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "valueCoding": {
+                                    "properties": {
+                                        "system": {
+                                            "type": "string"
+                                        },
+                                        "code": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "contained": {
+                        "description": "Present when `status` is `failed`. Contains OperationOutcome resources with error details.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OperationOutcome"
+                        }
+                    },
+                    "statusReason": {
+                        "description": "Present when `status` is `failed` or `exception`.",
+                        "properties": {
+                            "concept": {
+                                "properties": {
+                                    "text": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "Bearer": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "security": [
+        {
+            "Bearer": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Obtain a Bearer token for authenticating subsequent API calls."
+        },
+        {
+            "name": "Upload (async)",
+            "description": "Submit an ePIL and poll for the processing result. Recommended for standard integrations."
+        },
+        {
+            "name": "Upload (sync)",
+            "description": "Submit an ePIL and receive the final result in a single blocking call. Access is restricted \u2014 contact the platform team."
+        },
+        {
+            "name": "Misc",
+            "description": "Lifecycle operations for managing ePIL state."
+        }
+    ]
+}

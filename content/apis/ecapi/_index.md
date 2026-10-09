@@ -12,10 +12,12 @@ Die eCAPI stellt elektronische Produktinformationen bereit.
 | Version | Status |
 |----------|----------|
 | v1 | Active |
+| v2 | Active |
 
 ## Dokumentation
 
 - [Version 1](v1/)
+- [Version 2](v2/)
 - [Release Notes](release-notes/)
 
 ## Funktionen

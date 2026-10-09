@@ -1,0 +1,981 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentation for eCAPI v1",
+        "description": "eCAPI v1 is the consumer API for retrieving ePILs and company information. It supports lookups by PZN and exposes basic service/version endpoints.",
+        "version": "1.1.2",
+        "x-build": null
+    },
+    "servers": [
+        {
+            "url": "https://qa-digital.systems-tooling.de",
+            "description": "API over HTTPS"
+        }
+    ],
+    "paths": {
+        "/ecapi/v1/api-versions": {
+            "get": {
+                "tags": [
+                    "System"
+                ],
+                "summary": "Return eCAPI version information from nelmio_api_doc.yaml",
+                "description": "Get eCAPI version information",
+                "operationId": "get_ecapi-v1-api-versions",
+                "responses": {
+                    "200": {
+                        "description": "eCAPI version information",
+                        "headers": {
+                            "X-API-Version": {
+                                "description": "Currently active eCAPI version",
+                                "schema": {
+                                    "type": "string",
+                                    "example": "1.0.0"
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "Object keyed by major version group (e.g. \"v1\", \"v2\"). Each key maps to an array of version entries ordered newest-first within that group.",
+                                    "properties": {
+                                        "v1": {
+                                            "description": "All registered v1 minor/patch releases, ordered newest first.",
+                                            "type": "array",
+                                            "items": {
+                                                "description": "Version lifecycle metadata for a single eCAPI release.",
+                                                "properties": {
+                                                    "version": {
+                                                        "description": "Semantic version number of this release (semver).",
+                                                        "type": "string",
+                                                        "example": "1.1.0"
+                                                    },
+                                                    "reference_url": {
+                                                        "description": "URL to the API reference documentation for this version.",
+                                                        "type": "string",
+                                                        "example": "https://example.com/ecapi_reference"
+                                                    },
+                                                    "release_notes_url": {
+                                                        "description": "URL to the release notes for this version.",
+                                                        "type": "string",
+                                                        "example": "https://example.com/ecapi_release_notes"
+                                                    },
+                                                    "is_deprecated": {
+                                                        "description": "True when this version is officially deprecated and clients should migrate away.",
+                                                        "type": "boolean",
+                                                        "example": false
+                                                    },
+                                                    "sunrise_at": {
+                                                        "description": "ISO 8601 timestamp when this version became available. Null means available from the beginning.",
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-12-17T00:00:00Z",
+                                                        "nullable": true
+                                                    },
+                                                    "sundown_at": {
+                                                        "description": "ISO 8601 timestamp when the sunset period began. The version still works but support is winding down. Null means no sunset is scheduled.",
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2026-11-11T00:00:00Z",
+                                                        "nullable": true
+                                                    },
+                                                    "retirement_at": {
+                                                        "description": "ISO 8601 timestamp when this version was permanently retired. Requests to retired endpoints may be rejected. Null means no retirement is scheduled.",
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": null,
+                                                        "nullable": true
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "v2": {
+                                            "description": "All registered v2 minor/patch releases, ordered newest first.",
+                                            "type": "array",
+                                            "items": {
+                                                "description": "Version lifecycle metadata for a single eCAPI release.",
+                                                "properties": {
+                                                    "version": {
+                                                        "description": "Semantic version number of this release (semver).",
+                                                        "type": "string",
+                                                        "example": "2.0.0"
+                                                    },
+                                                    "reference_url": {
+                                                        "description": "URL to the API reference documentation for this version.",
+                                                        "type": "string",
+                                                        "example": "https://example.com/ecapi_reference"
+                                                    },
+                                                    "release_notes_url": {
+                                                        "description": "URL to the release notes for this version.",
+                                                        "type": "string",
+                                                        "example": "https://example.com/ecapi_release_notes"
+                                                    },
+                                                    "is_deprecated": {
+                                                        "description": "True when this version is officially deprecated and clients should migrate away.",
+                                                        "type": "boolean",
+                                                        "example": false
+                                                    },
+                                                    "sunrise_at": {
+                                                        "description": "ISO 8601 timestamp when this version became available. Null means available from the beginning.",
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2026-05-11T00:00:00Z",
+                                                        "nullable": true
+                                                    },
+                                                    "sundown_at": {
+                                                        "description": "ISO 8601 timestamp when the sunset period began. The version still works but support is winding down. Null means no sunset is scheduled.",
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": null,
+                                                        "nullable": true
+                                                    },
+                                                    "retirement_at": {
+                                                        "description": "ISO 8601 timestamp when this version was permanently retired. Requests to retired endpoints may be rejected. Null means no retirement is scheduled.",
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": null,
+                                                        "nullable": true
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "v2": [
+                                        {
+                                            "version": "2.0.0",
+                                            "reference_url": "https://example.com/ecapi_reference",
+                                            "release_notes_url": "https://example.com/ecapi_release_notes",
+                                            "is_deprecated": false,
+                                            "sunrise_at": "2026-05-11T00:00:00Z",
+                                            "sundown_at": null,
+                                            "retirement_at": null
+                                        }
+                                    ],
+                                    "v1": [
+                                        {
+                                            "version": "1.1.0",
+                                            "reference_url": "https://example.com/ecapi_reference",
+                                            "release_notes_url": "https://example.com/ecapi_release_notes",
+                                            "is_deprecated": false,
+                                            "sunrise_at": "2025-12-17T00:00:00Z",
+                                            "sundown_at": "2026-11-11T00:00:00Z",
+                                            "retirement_at": null
+                                        },
+                                        {
+                                            "version": "1.0.0",
+                                            "reference_url": "https://example.com/ecapi_reference",
+                                            "release_notes_url": "https://example.com/ecapi_release_notes",
+                                            "is_deprecated": false,
+                                            "sunrise_at": "2024-12-09T00:00:00Z",
+                                            "sundown_at": "2026-01-26T00:00:00Z",
+                                            "retirement_at": "2026-01-26T00:00:00Z"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/ecapi/v1/version": {
+            "get": {
+                "tags": [
+                    "System"
+                ],
+                "summary": "Return the application version information (that's _not_ the API version).",
+                "description": "Get application version (that's _not_ the API version). Note that version and stage information is only available to authenticated users.",
+                "operationId": "get_ecapi-v1-version",
+                "responses": {
+                    "200": {
+                        "description": "Get application version (that's _not_ the API version). Note that version and stage information is only available to authenticated users.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "version": {
+                                            "description": "Application version (only included if authenticated)",
+                                            "type": "string"
+                                        },
+                                        "build": {
+                                            "description": "Build information (only included if authenticated)",
+                                            "type": "string"
+                                        },
+                                        "stage": {
+                                            "description": "Environment stage (only included if authenticated)",
+                                            "type": "string"
+                                        },
+                                        "integration_test_identifier": {
+                                            "description": "Integration test identifier (included based on environment)",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/ecapi/v1/pil/pzn/{pzn}": {
+            "get": {
+                "tags": [
+                    "ePIL"
+                ],
+                "summary": "Return ePIL by PZN as FHIR+JSON or FHIR+XML",
+                "description": "Get ePIL by PZN",
+                "externalDocs": {
+                    "description": "UC06-003 (internal documentation)",
+                    "url": "https://nma-s-confluence.arvato-systems.de/x/fKovJQ"
+                },
+                "operationId": "get_v1-get-pil-document-by-pzn",
+                "parameters": [
+                    {
+                        "name": "pzn",
+                        "in": "path",
+                        "description": "The request PZN",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Response body contains ePIL data in FHIR XML or JSON format.",
+                        "content": {
+                            "application/fhir+json": {},
+                            "application/fhir+xml": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request errors in ePIL context.",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationOutcome"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationOutcome"
+                                },
+                                "example": {
+                                    "resourceType": "OperationOutcome",
+                                    "issue": [
+                                        {
+                                            "severity": "error",
+                                            "code": "exception",
+                                            "details": {
+                                                "coding": [
+                                                    {
+                                                        "code": "Valid PZN required"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Different errors from ePIL context.",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationOutcome"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationOutcome"
+                                },
+                                "examples": {
+                                    "not-found-by-pzn": {
+                                        "summary": "PIL not found by PZN.",
+                                        "value": {
+                                            "resourceType": "OperationOutcome",
+                                            "issue": [
+                                                {
+                                                    "severity": "error",
+                                                    "code": "exception",
+                                                    "details": {
+                                                        "coding": [
+                                                            {
+                                                                "code": "PIL not found by PZN."
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "details-not-found": {
+                                        "summary": "PIL details not found.",
+                                        "value": {
+                                            "resourceType": "OperationOutcome",
+                                            "issue": [
+                                                {
+                                                    "severity": "error",
+                                                    "code": "exception",
+                                                    "details": {
+                                                        "coding": [
+                                                            {
+                                                                "code": "PIL details not found."
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "details-unreadable": {
+                                        "summary": "PIL details could not be read.",
+                                        "value": {
+                                            "resourceType": "OperationOutcome",
+                                            "issue": [
+                                                {
+                                                    "severity": "error",
+                                                    "code": "exception",
+                                                    "details": {
+                                                        "coding": [
+                                                            {
+                                                                "code": "PIL details could not be read."
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "Internal Errors"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/ecapi/v1/pil/businessId/{businessId}": {
+            "get": {
+                "tags": [
+                    "ePIL"
+                ],
+                "description": "Get ePIL by Internal Business ID",
+                "operationId": "get_v1-get-pil-document-by-business-id",
+                "parameters": [
+                    {
+                        "name": "businessId",
+                        "in": "path",
+                        "description": "The internal Business ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "medicinalProductId",
+                        "in": "query",
+                        "description": "Optional Medicinal Product UUID for tracking",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Response body contains ePIL data in FHIR XML or JSON format.",
+                        "content": {
+                            "application/fhir+json": {},
+                            "application/fhir+xml": {}
+                        }
+                    },
+                    "404": {
+                        "description": "Different errors from ePIL context.",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationOutcome"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationOutcome"
+                                },
+                                "examples": {
+                                    "not-found-by-business-id": {
+                                        "summary": "PIL not found by Business ID.",
+                                        "value": {
+                                            "resourceType": "OperationOutcome",
+                                            "issue": [
+                                                {
+                                                    "severity": "error",
+                                                    "code": "exception",
+                                                    "details": {
+                                                        "coding": [
+                                                            {
+                                                                "code": "PIL not found by Business ID."
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "details-not-found": {
+                                        "summary": "PIL details not found.",
+                                        "value": {
+                                            "resourceType": "OperationOutcome",
+                                            "issue": [
+                                                {
+                                                    "severity": "error",
+                                                    "code": "exception",
+                                                    "details": {
+                                                        "coding": [
+                                                            {
+                                                                "code": "PIL details not found."
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "Internal Errors"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/ecapi/v1/pil/search": {
+            "get": {
+                "tags": [
+                    "ePIL"
+                ],
+                "summary": "INFO: Changes to hide search options are temporary because https://arvato-systems-group.atlassian.net/browse/DIGIT-2077",
+                "description": "Find ePILs by PZN or medicinal product name.",
+                "externalDocs": {
+                    "description": "UC06-016 (internal documentation)",
+                    "url": "https://nma-s-confluence.arvato-systems.de/x/CW6xJw"
+                },
+                "operationId": "get_v1-get-pil-search",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Search by PZN or medicinal product name (partial search).",
+                        "required": true,
+                        "examples": {
+                            "Search by a PZN.": {
+                                "summary": "Search by a PZN.",
+                                "description": "Search by a PZN.",
+                                "value": "00094113"
+                            },
+                            "Search by medicinal product name.": {
+                                "summary": "Search by medicinal product name.",
+                                "description": "Search by medicinal product name.",
+                                "value": "Aspirin"
+                            }
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for pagination (default is 1).",
+                        "required": false,
+                        "examples": {
+                            "page": {
+                                "summary": "page",
+                                "description": "Page number for pagination (default is 1).",
+                                "value": "1"
+                            }
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Number of results per page (default is 5, minimum is 5, maximum is 50).",
+                        "required": false,
+                        "examples": {
+                            "limit": {
+                                "summary": "limit",
+                                "description": "Number of results per page (default is 5, minimum is 5, maximum is 50).",
+                                "value": "5"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Response body contains ePIL filterListResult in FHIR XML or JSON format.",
+                        "content": {
+                            "application/fhir+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Bundle"
+                                }
+                            },
+                            "application/fhir+xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Bundle"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Different errors related to invalid search parameters, e.g. missing required parameter or invalid characters in the search query.",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationOutcome"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationOutcome"
+                                },
+                                "examples": {
+                                    "q-required": {
+                                        "summary": "Either 'q' or 'org-id' parameter is required.",
+                                        "value": {
+                                            "resourceType": "OperationOutcome",
+                                            "issue": [
+                                                {
+                                                    "severity": "error",
+                                                    "code": "exception",
+                                                    "details": {
+                                                        "coding": [
+                                                            {
+                                                                "code": "Either 'q' or 'org-id' parameter is required."
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "invalid-characters": {
+                                        "summary": "The query contains characters that are not allowed.",
+                                        "value": {
+                                            "resourceType": "OperationOutcome",
+                                            "issue": [
+                                                {
+                                                    "severity": "error",
+                                                    "code": "exception",
+                                                    "details": {
+                                                        "coding": [
+                                                            {
+                                                                "code": "The query may only contain letters, umlauts, numbers, whitespace, and the following markers/special characters: \u00ae, (R), \u2122, TM, \u00a9, (C), \u2120, SM, -, /, \u00b0, `,`, `.`, \u00b5(0xC2B5), \u03bc(0xCEBC), @, &, <sup></sup><sub></sub>"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "An error occurred while querying the index.",
+                        "content": {
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationOutcome"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OperationOutcome"
+                                },
+                                "example": {
+                                    "resourceType": "OperationOutcome",
+                                    "issue": [
+                                        {
+                                            "severity": "error",
+                                            "code": "exception",
+                                            "details": {
+                                                "coding": [
+                                                    {
+                                                        "code": "An error occurred while querying the index."
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/ecapi/token": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Create an OAuth2 access token for eCAPI.",
+                "description": "Create an OAuth2 access token for eCAPI",
+                "externalDocs": {
+                    "description": "UC06-001 (internal documentation)",
+                    "url": "https://nma-s-confluence.arvato-systems.de/x/dKQvJQ"
+                },
+                "operationId": "post_oauth2_ecapi_token",
+                "requestBody": {
+                    "description": "OAuth2 access token request. The OAuth2 standard (RFC 6749) requires application/x-www-form-urlencoded; application/json is also accepted.",
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "properties": {
+                                    "grant_type": {
+                                        "type": "string",
+                                        "example": "client_credentials"
+                                    },
+                                    "client_id": {
+                                        "type": "string",
+                                        "example": "client_id"
+                                    },
+                                    "client_secret": {
+                                        "type": "string",
+                                        "example": "client_secret"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            },
+                            "example": {
+                                "grant_type": "client_credentials",
+                                "client_id": "client_id",
+                                "client_secret": "client_secret"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OAuth2 access token created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "token_type": "Bearer",
+                                    "expires_in": 3600,
+                                    "access_token": "access_token"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "error": "invalid_request",
+                                    "error_description": "The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed."
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "error": "invalid_client",
+                                    "error_description": "Client authentication failed.",
+                                    "message": "Client authentication failed."
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "OperationOutcome": {
+                "description": "FHIR OperationOutcome resource used for error responses.",
+                "required": [
+                    "resourceType",
+                    "issue"
+                ],
+                "properties": {
+                    "resourceType": {
+                        "type": "string",
+                        "example": "OperationOutcome"
+                    },
+                    "issue": {
+                        "type": "array",
+                        "items": {
+                            "required": [
+                                "severity",
+                                "code"
+                            ],
+                            "properties": {
+                                "severity": {
+                                    "type": "string",
+                                    "enum": [
+                                        "fatal",
+                                        "error",
+                                        "warning",
+                                        "information"
+                                    ],
+                                    "example": "error"
+                                },
+                                "code": {
+                                    "type": "string",
+                                    "example": "exception"
+                                },
+                                "details": {
+                                    "properties": {
+                                        "coding": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "code": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Organization": {
+                "description": "FHIR Organization resource returned inside a Bundle by the company/logo endpoints.",
+                "required": [
+                    "resourceType",
+                    "id"
+                ],
+                "properties": {
+                    "resourceType": {
+                        "type": "string",
+                        "example": "Organization"
+                    },
+                    "id": {
+                        "type": "string",
+                        "example": "12345"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Example Company"
+                    }
+                },
+                "type": "object"
+            },
+            "MedicinalProductDefinition": {
+                "description": "FHIR MedicinalProductDefinition resource returned inside a Bundle by PIL/PZN endpoints.",
+                "required": [
+                    "resourceType",
+                    "id"
+                ],
+                "properties": {
+                    "resourceType": {
+                        "type": "string",
+                        "example": "MedicinalProductDefinition"
+                    },
+                    "id": {
+                        "type": "string",
+                        "example": "mpd-12345"
+                    },
+                    "name": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "productName": {
+                                    "type": "string",
+                                    "example": "Example Medicinal Product"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Composition": {
+                "description": "FHIR Composition resource returned inside a Bundle by PIL-related endpoints.",
+                "required": [
+                    "resourceType",
+                    "id"
+                ],
+                "properties": {
+                    "resourceType": {
+                        "type": "string",
+                        "example": "Composition"
+                    },
+                    "id": {
+                        "type": "string",
+                        "example": "comp-12345"
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "final"
+                    }
+                },
+                "type": "object"
+            },
+            "PackagedProductDefinition": {
+                "description": "FHIR PackagedProductDefinition resource returned inside a Bundle by PIL-related endpoints.",
+                "required": [
+                    "resourceType",
+                    "id"
+                ],
+                "properties": {
+                    "resourceType": {
+                        "type": "string",
+                        "example": "PackagedProductDefinition"
+                    },
+                    "id": {
+                        "type": "string",
+                        "example": "ppd-12345"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Example Packaged Product"
+                    }
+                },
+                "type": "object"
+            },
+            "Bundle": {
+                "description": "FHIR Bundle resource of type searchset used by eCAPI search and company/logo endpoints.",
+                "required": [
+                    "resourceType",
+                    "type",
+                    "total"
+                ],
+                "properties": {
+                    "resourceType": {
+                        "type": "string",
+                        "example": "Bundle"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "searchset"
+                    },
+                    "total": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "meta": {
+                        "properties": {
+                            "lastUpdated": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2026-01-01T00:00:00Z"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "entry": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "resource": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/Organization"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/MedicinalProductDefinition"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/Composition"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/PackagedProductDefinition"
+                                        }
+                                    ]
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "Bearer": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "security": [
+        {
+            "Bearer": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Obtain a Bearer token for authenticating subsequent API calls."
+        },
+        {
+            "name": "ePIL",
+            "description": "Retrieve ePIL documents which conform with the FHIR Implementation Guide found at [https://fhir.pharmaprotect.de/digital/epil-fhir-ig/](https://fhir.pharmaprotect.de/digital/epil-fhir-ig/)."
+        },
+        {
+            "name": "System",
+            "description": "Service health and version details."
+        }
+    ]
+}
