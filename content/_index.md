@@ -1,9 +1,93 @@
 ---
-title: "RL Digital API Documentation"
+title: "EPL API Documentation"
 linkTitle: "Home"
+weight: 10
+cascade:
+  toc: true
 ---
 
-# RL Digital API Documentation
+# Welcome to the Electronic Product Leaflet (EPL) API Documentation
+
+## About the EPL Project
+
+The Electronic Product Leaflet (EPL) Project is an industry-wide initiative aimed at digitizing pharmaceutical product information and replacing traditional paper package leaflets with secure digital alternatives.
+
+The project was launched by leading German pharmaceutical industry associations, including BPI, Pharma Deutschland, Pro Generika, and vfa, with the objective of improving patient access to up-to-date medicinal product information while supporting the digital transformation of healthcare.
+
+The EPL platform provides a standardized ecosystem for the creation, management, publication, and retrieval of electronic product information (ePI). Through a set of dedicated APIs, pharmaceutical companies, service providers, and digital healthcare applications can exchange product information in a consistent and interoperable manner.
+
+The platform is operated by PharmaProtect Solutions GmbH (PPS) on behalf of the German pharmaceutical industry and leverages established healthcare interoperability standards to ensure data quality, security, and regulatory compliance.
+
+### Key Objectives
+Digitize pharmaceutical product information and package leaflets.
+Improve patient access to current and accurate information.
+Establish a standardized platform for electronic product information (ePI).
+Enable seamless integration through standardized APIs.
+Support regulatory compliance and interoperability within the healthcare ecosystem.
+
+## Available APIs
+
+👉 [To APIs](/rl-digital-api-docs/apis/)
+
+
+### eAAPI (Electronic Author API)
+ Enables the creation, submission, and maintenance of electronic product information.
+
+👉 [eAAPI](/rl-digital-api-docs/apis/eaapi/)
+
+
+
+### eCAPI (Electronic Consumer API)
+ Provides access to published product information for consumer and third-party applications.
+
+ 
+👉 [eCAPI](/rl-digital-api-docs/apis/ecapi/)
+
+### PAPI (Portal API)
+ Supports administrative and portal-related functions within the EPL ecosystem.
+
+
+
+👉 [Zur PAPI](/rl-digital-api-docs/apis/papi)
+
+
+## API and Documentation Architecture
+
+```mermaid
+flowchart TB
+    subgraph Partners[External Partners]
+      PH[Pharmaceutical Manufacturers and Service Providers]
+      KV[Health Insurance Providers]
+    end
+
+    subgraph RL[RL Digital]
+      EA[eAAPI v1]
+      EC1[eCAPI v1]
+      EC2[eCAPI v2]
+      PA[PAPI v1]
+      BE[Backend Services]
+      DS[(Document Store)]
+    end
+
+    subgraph Portal[Internal Administration Portal]
+      UI[Portal Frontend]
+    end
+
+    PH -->|Product Information Submission| EA
+    KV -->|Retrieval| EC1
+    KV -->|Search and Retrieval| EC2
+    UI -->|Portal Functions| PA
+    EA --> BE
+    EC1 --> BE
+    EC2 --> BE
+    PA --> BE
+    BE --> DS
+```
+
+---
+
+
+# Internal: RL Digital API Documentation
 
 Evaluierung von Hugo + Docsy im Rahmen von DIGIT-2604 zur Neustrukturierung der internen und externen API-Dokumentation.
 
@@ -17,55 +101,10 @@ Evaluierung von Hugo + Docsy im Rahmen von DIGIT-2604 zur Neustrukturierung der 
 - Automatisierte Bereitstellung
 - Git-basierte Zusammenarbeit
 
-## APIs
-
-### eAAPI
-
-👉 [Zur eAAPI](/rl-digital-api-docs/apis/eaapi/)
-
-### eCAPI
-
-👉 [Zur eCAPI](/rl-digital-api-docs/apis/ecapi/)
-
-### PAPI
-
-👉 [Zur PAPI](/rl-digital-api-docs/apis/papi)
 
 
 
-## API- und Dokumentationsarchitektur
-
-```mermaid
-flowchart TB
-    subgraph Partners[Externe Partner]
-      PH[Pharma/Dienstleister]
-      KV[Krankenversicherer]
-    end
-
-    subgraph RL[RL Digital]
-      EA[eAAPI v1]
-      EC1[eCAPI v1]
-      EC2[eCAPI v2]
-      PA[PAPI v1]
-      BE[Backend Services]
-      DS[(Document Store)]
-    end
-
-    subgraph Portal[Internes Portal]
-      UI[Portal Frontend]
-    end
-
-    PH -->|Einlieferung| EA
-    KV -->|Abruf| EC1
-    KV -->|Suche/Abruf| EC2
-    UI -->|Portal-Funktionen| PA
-    EA --> BE
-    EC1 --> BE
-    EC2 --> BE
-    PA --> BE
-    BE --> DS
-```
-
+## 
 ## Architektur
 
 ```mermaid
@@ -116,3 +155,7 @@ GH --> WS
 3. GitHub Actions vervollständigen
 4. Hosting-Konzept dokumentieren
 5. Architekturentscheidung für DIGIT-2604 vorbereiten
+
+## Known Bugs
+
+1. Sidebar ist nicht auf allen Seiten

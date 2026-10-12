@@ -1,6 +1,8 @@
 ---
 title: "PAPI"
 weight: 30
+cascade:
+  toc: true
 ---
 
 Funktionen des Portals. Die fachlichen Inhalte sind Platzhalter und müssen gegen die freigegebene Produktdokumentation geprüft werden.
@@ -9,7 +11,6 @@ Funktionen des Portals. Die fachlichen Inhalte sind Platzhalter und müssen gege
 
 - Dokumentation wurde noch nicht erstellt
   
-
 ```mermaid
 flowchart LR
     UI[Portal Frontend] -->|POST publication-jobs| PAPI[Portal API]
@@ -21,4 +22,4 @@ flowchart LR
     PUB --> DOC[(Dokumentenspeicher)]
     PUB --> STATUS[Status Update]
     STATUS --> DB
-```
+    ```

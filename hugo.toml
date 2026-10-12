@@ -1,5 +1,5 @@
 baseURL = "https://wolfgang61.github.io/rl-digital-api-docs/"
-title = "RL Digital API Documentation"
+title = "Electronic Product Leaflet API Documentation"
 
 defaultContentLanguage = "de"
 
@@ -7,9 +7,11 @@ enableRobotsTXT = true
 enableGitInfo = true
 
 [params]
-  copyright = "RL Digital"
+  copyright = "EPL"
   github_repo = "https://github.com/Wolfgang61/rl-digital-api-docs"
   github_project_repo = "https://github.com/Wolfgang61/rl-digital-api-docs"
+  robots = "noindex, nofollow"
+
 
   offlineSearch = true
 
@@ -18,6 +20,8 @@ enableGitInfo = true
     sidebar_menu_compact = true
     sidebar_search_disable = false
     breadcrumb_disable = false
+    # Aktiviert Feedback-Buttons
+    feedback = { enable = true, yes = "Yes, this page was helpful!", no = "No, this page needs improvement" }
 
 [markup]
   [markup.goldmark.renderer]
