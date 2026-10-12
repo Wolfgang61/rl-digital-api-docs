@@ -19,4 +19,6 @@ nsumer API für die Abfrage von Produktinformationen.
 
 Portal API für Portal- und Verwaltungsfunktionen.
 
+
+
 👉 [Zur PAPI](/rl-digital-api-docs/apis/papi/)

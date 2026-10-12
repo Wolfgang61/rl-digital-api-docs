@@ -26,6 +26,22 @@ Die eCAPI stellt elektronische Produktinformationen bereit.
 - Suchfunktionen
 - Metadaten bereitstellen
 
+
+```mermaid
+sequenceDiagram
+    actor Client as Krankenversicherer
+    participant EC as Consumer API v2
+    participant IDX as Suchindex
+    participant STORE as Dokumentenspeicher
+
+    Client->>EC: GET /products/{productId}/documents
+    EC->>IDX: Veröffentlichte Dokumente suchen
+    IDX-->>EC: Dokumentmetadaten
+    EC->>STORE: signierte Download-URL anfordern
+    STORE-->>EC: temporäre URL
+    EC-->>Client: 200 OK + Dokumentliste
+```
+
 ## OpenAPI
 
 Die API wird über OpenAPI 3.0 beschrieben.
