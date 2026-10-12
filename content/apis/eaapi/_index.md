@@ -12,6 +12,7 @@ Electronic Author API für die Pflege und Bereitstellung von Produktinformatione
 ## Dokumentation
 
 - [Version 1](v1/)
+- [Beispielablauf](example/)
 - [Release Notes](release-notes/)
 
 ## Überblick
