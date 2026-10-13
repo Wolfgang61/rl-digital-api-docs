@@ -9,20 +9,20 @@ cascade:
 
 The Electronic Consumer API (eCAPI) enables the search and retrieval of electronic product information within the EPL platform.
 
-## Verfügbare Versionen
+## Available Versions
 
 | Version | Status |
 |----------|----------|
 | v1 | Active |
 | v2 | Active |
 
-## Dokumentation
+## Documentation
 
 - [Version 1](v1/)
 - [Version 2](v2/) (recommended)
 - [Release Notes](release-notes/)
 
-## Funktionen
+## Functions
 
 - Retrieve product information
 - Provide search capabilities
@@ -33,7 +33,7 @@ The Electronic Consumer API (eCAPI) enables the search and retrieval of electron
 sequenceDiagram
     actor Client as Health insurance provider
     participant EC as Consumer API v2
-    participant IDX as SSearch index
+    participant IDX as Search index
     participant STORE as Document Repository
 
     Client->>EC: GET /products/{productId}/documents

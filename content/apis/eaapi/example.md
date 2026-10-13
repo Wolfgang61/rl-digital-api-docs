@@ -1,34 +1,35 @@
 ---
-title: "Beispiel: Erfolgreiche ePIL-Einlieferung"
-linkTitle: "Beispielablauf"
+title: "Example: Successful ePIL Submission"
+linkTitle: "Example Workflow"
 weight: 15
-description: "Vollständiger curl-Walkthrough einer erfolgreichen ePIL-Einlieferung über die eAAPI v1."
+description: "Complete curl walkthrough of a successful ePIL submission via eAAPI v1."
 ---
 
-Dieser Ablauf zeigt eine vollständig erfolgreiche Einlieferung eines ePIL über die eAAPI v1:
-Token anfordern, ePIL hochladen, Status abfragen und das Ergebnis auswerten.
+## Overview
 
-Die vollständige Endpunkt- und Schemabeschreibung steht in der [OpenAPI-Dokumentation](../v1/).
+This walkthrough demonstrates a fully successful ePIL submission via eAAPI v1:
 
-## Voraussetzungen
+- Requesting an access token
+- Uploading an ePIL
+- Checking the processing status
+- Evaluating the result
 
-| Wert | Beschreibung |
+The complete endpoint and schema documentation is available in [OpenAPI Documentationrerequisites
+
+| Value | Description |
 | --- | --- |
-| `BASE_URL` | Basis-URL der Umgebung, z. B. `https://qa-digital.systems-tooling.de` |
-| `CLIENT_ID` / `CLIENT_SECRET` | OAuth2-Client-Credentials des einliefernden Mandanten |
-| ePIL-Datei | FHIR-Bundle gemäß [ePIL FHIR Implementation Guide](https://fhir.pharmaprotect.de/digital/epil-fhir-ig/) |
-
-```bash
-export BASE_URL="https://qa-digital.systems-tooling.de"
+| `BASE_URL` | Environment base URL, e.g. `https://qa-digital.systems-tooling.de` |
+| `CLIENT_ID` / `CLIENT_SECRET` | OAuth2 client credentials of the submitting tenant |
+| ePIL file | FHIR Bundle according to the [ePIL FHIR Implementation Guide](https://fhir.pharmaprotect.de/digital/epil-fL="https://qa-digital.systems-tooling.de"
 export CLIENT_ID="<client_id>"
 export CLIENT_SECRET="<client_secret>"
 ```
 
-{{% alert title="Hinweis" color="warning" %}}
-Client-Secrets gehören in eine Secret-Verwaltung und niemals in Repositories, Tickets oder Logs.
+{{% alert title="Note" color="warning" %}}
+Client secrets must be stored in a secure secret management solution and must never be committed to repositories, tickets, or logs.
 {{% /alert %}}
 
-## Schritt 1: Access Token anfordern
+## Step 1: Request an Access Token
 
 ```bash
 curl -X POST "$BASE_URL/eaapi/token" \
@@ -40,7 +41,7 @@ curl -X POST "$BASE_URL/eaapi/token" \
       }"
 ```
 
-Antwort (`200 OK`):
+Response (`200 OK`):
 
 ```json
 {
@@ -50,15 +51,15 @@ Antwort (`200 OK`):
 }
 ```
 
-Token für die folgenden Aufrufe übernehmen:
+Store the token for subsequent requests:
 
 ```bash
 export TOKEN="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9..."
 ```
 
-## Schritt 2: ePIL hochladen
+## Step 2: Upload an ePIL
 
-Der Upload erfolgt als `multipart/form-data` mit dem Feld `file`.
+The upload is performed as `multipart/form-data` using the `file` field.
 
 ```bash
 curl -X POST "$BASE_URL/eaapi/v1/pil/create" \
@@ -66,7 +67,7 @@ curl -X POST "$BASE_URL/eaapi/v1/pil/create" \
   -F "file=@epil-bundle.json"
 ```
 
-Antwort (`202 Accepted`):
+Response (`202 Accepted`):
 
 ```json
 {
@@ -82,23 +83,22 @@ Antwort (`202 Accepted`):
 }
 ```
 
-`_id.id` ist die `requestId` und wird für die Statusabfrage benötigt:
+`_id.id` is the `requestId` and is required for the status query:
 
 ```bash
 export REQUEST_ID="9fba01ee-171e-cca1-040f-ab17b4167a19"
 ```
 
-## Schritt 3: Verarbeitungsstatus abfragen
+## Step 3: Check the Processing Status
 
-Die Verarbeitung läuft asynchron. Der Status wird so lange abgefragt, bis `status` nicht mehr
-`processing` ist.
+Processing is asynchronous. Query the status repeatedly until `status` is no longer `processing`.
 
 ```bash
 curl "$BASE_URL/eaapi/v1/pil/upload-status/$REQUEST_ID" \
   -H "Authorization: Bearer $TOKEN"
 ```
 
-Antwort (`200 OK`) nach erfolgreicher Verarbeitung:
+Response (`200 OK`) after successful processing:
 
 ```json
 {
@@ -112,14 +112,18 @@ Antwort (`200 OK`) nach erfolgreicher Verarbeitung:
   },
   "output": [
     {
-      "type": { "text": "businessId" },
+      "type": {
+        "text": "businessId"
+      },
       "valueCoding": {
         "system": "http://pharmaprotect.de/digital/epil",
         "code": "8a3f6502-db6e-5afb-b701-54395df701d9"
       }
     },
     {
-      "type": { "text": "medicinalProductId" },
+      "type": {
+        "text": "medicinalProductId"
+      },
       "valueCoding": {
         "system": "http://pharmaprotect.de/digital/epil/medicinal-product-definition",
         "code": "f29661b7-672d-588b-874d-bf1b228d6127"
@@ -130,20 +134,19 @@ Antwort (`200 OK`) nach erfolgreicher Verarbeitung:
 }
 ```
 
-{{% alert title="Wichtig" color="warning" %}}
-Auch Verarbeitungsfehler werden mit HTTP `200` zurückgegeben. Der Erfolg ergibt sich ausschließlich
-aus `status == "success"`, nicht aus dem HTTP-Statuscode.
+{{% alert title="Important" color="warning" %}}
+Processing errors are also returned with HTTP `200`. Success must be determined exclusively from `status == "success"` and not from the HTTP status code.
 {{% /alert %}}
 
-## Schritt 4: Ergebnis auswerten
+## Step 4: Evaluate the Result
 
-| Feld | Bedeutung |
+| Field | Meaning |
 | --- | --- |
-| `status` | `success` bestätigt die erfolgreiche Einlieferung |
-| `output[].type.text == "businessId"` | Fachliche ID des ePIL, u. a. für das Sperren erforderlich |
-| `output[].type.text == "medicinalProductId"` | IDs der erzeugten bzw. verknüpften Arzneimittel |
+| `status` | `success` confirms a successful submission |
+| `output[].type.text == "businessId"` | Business identifier of the ePIL; required for actions such as blocking |
+| `output[].type.text == "medicinalProductId"` | IDs of the created or linked medicinal products |
 
-`businessId` extrahieren:
+Extract the `businessId`:
 
 ```bash
 curl -s "$BASE_URL/eaapi/v1/pil/upload-status/$REQUEST_ID" \
@@ -151,7 +154,7 @@ curl -s "$BASE_URL/eaapi/v1/pil/upload-status/$REQUEST_ID" \
   | jq -r '.output[] | select(.type.text == "businessId") | .valueCoding.code'
 ```
 
-## Vollständiges Beispielskript
+## Complete Example Script
 
 ```bash
 #!/usr/bin/env bash
@@ -168,22 +171,25 @@ REQUEST_ID=$(curl -s -X POST "$BASE_URL/eaapi/v1/pil/create" \
   | jq -r '._id.id')
 
 STATUS="processing"
+
 while [ "$STATUS" = "processing" ]; do
   sleep 5
+
   RESPONSE=$(curl -s "$BASE_URL/eaapi/v1/pil/upload-status/$REQUEST_ID" \
     -H "Authorization: Bearer $TOKEN")
+
   STATUS=$(echo "$RESPONSE" | jq -r '.status')
 done
 
 if [ "$STATUS" != "success" ]; then
-  echo "Einlieferung fehlgeschlagen: $(echo "$RESPONSE" | jq -r '.statusReason.concept.text // "unbekannt"')" >&2
+  echo "Submission failed: $(echo "$RESPONSE" | jq -r '.statusReason.concept.text // "unknown"')" >&2
   exit 1
 fi
 
 echo "$RESPONSE" | jq -r '.output[] | select(.type.text == "businessId") | .valueCoding.code'
 ```
 
-## Ablauf im Überblick
+## Workflow Overview
 
 ```mermaid
 sequenceDiagram
@@ -193,19 +199,27 @@ sequenceDiagram
 
     C->>EA: POST /eaapi/token
     EA-->>C: 200 access_token
+
     C->>EA: POST /eaapi/v1/pil/create (multipart file)
     EA-->>C: 202 Task status=processing + requestId
-    loop bis status != processing
+
+    loop until status != processing
         C->>EA: GET /eaapi/v1/pil/upload-status/{requestId}
         EA-->>C: 200 Task status
     end
+
     EA-->>C: 200 Task status=success + businessId
 ```
 
-## Alternative: Synchroner Upload
+## Alternative: Synchronous Upload
 
-Für freigeschaltete Clients liefert `POST /eaapi/v1/pil/create-sync` dasselbe Ergebnis ohne Polling
-direkt mit HTTP `200`. Auch hier ist `status == "success"` auszuwerten.
+For enabled clients, `POST /eaapi/v1/pil/create-sync` returns the same result directly with HTTP `200`, eliminating the need for polling.
+
+As with the asynchronous workflow, clients must evaluate:
+
+```text
+status == "success"
+```
 
 ```bash
 curl -X POST "$BASE_URL/eaapi/v1/pil/create-sync" \
@@ -213,13 +227,13 @@ curl -X POST "$BASE_URL/eaapi/v1/pil/create-sync" \
   -F "file=@epil-bundle.json"
 ```
 
-## Fehlerbehandlung
+## Error Handling
 
-| Situation | Erkennung |
+| Situation | Detection |
 | --- | --- |
-| Ungültige Client-Credentials | HTTP `401` mit `error: invalid_client` |
-| Client nicht berechtigt | HTTP `403` |
-| Leere oder ungültige Datei | HTTP `400` mit `OperationOutcome` |
-| Fachlicher Verarbeitungsfehler | HTTP `200` mit `status` = `failed` oder `exception`, Details in `statusReason.concept.text` |
+| Invalid client credentials | HTTP `401` with `error: invalid_client` |
+| Client not authorized | HTTP `403` |
+| Empty or invalid file | HTTP `400` with `OperationOutcome` |
+| Business processing error | HTTP `200` with `status = failed` or `exception`; details available in `statusReason.concept.text` |
 
-Die vollständige Liste der Antwortcodes und Schemata steht in der [OpenAPI-Dokumentation](../v1/).
+The complete list of response codes and schemas is available in the [OpenAPI Documentation](/apis/)

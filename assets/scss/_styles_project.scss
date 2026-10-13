@@ -1,23 +1,29 @@
-.openapi-reference { margin-top: 1rem; border: 1px solid #d8dee4; border-radius: .35rem; overflow: hidden; }
-.td-content code { word-break: break-word; }
+/* ==========================================================================
+   Custom project styles
+   ========================================================================== */
 
-
-.td-content {
-    padding-top: 3rem;
+.openapi-reference {
+  margin-top: 1rem;
+  border: 1px solid #d8dee4;
+  border-radius: .35rem;
+  overflow: hidden;
 }
 
 .redoc-wrap {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
-.td-main {
+.td-content code,
+code {
+  word-break: break-word;
+}
+
+/* Space below the Docsy navbar */
+main.td-main {
   padding-top: 2rem;
 }
 
-main {
-  padding-top: 3rem;
-}
-
-.td-home .td-main {
-  padding-top: 4rem;
+/* First page heading */
+main.td-main > h1:first-child {
+  margin-top: 0;
 }

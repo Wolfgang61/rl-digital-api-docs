@@ -84,6 +84,22 @@ flowchart TB
     BE --> DS
 ```
 
+The diagram illustrates the overall architecture of the Electronic Product Leaflet (EPL) platform and shows how different stakeholders interact with the available APIs and backend services.
+
+External partners, consisting of pharmaceutical manufacturers, service providers, and health insurance providers, access the platform through dedicated APIs. Pharmaceutical manufacturers and their service providers submit product information via the Electronic Author API (eAAPI v1). Health insurance providers retrieve electronic product leaflet data through the Electronic Consumer API (eCAPI), which is available in both v1 and v2 versions.
+
+Internal users access the system through the administration portal. The portal frontend communicates with the backend via the Portal API (PAPI v1), which provides administrative and portal-specific functionality.
+
+All APIs are connected to a shared set of backend services that implement the business logic of the platform. These backend services act as the central integration layer for data submission, retrieval, search operations, and administrative functions.
+
+The backend services persist and retrieve data from the central Document Store, which serves as the authoritative repository for electronic product leaflet content and related metadata.
+
+This architecture clearly separates the different consumer groups and their use cases while ensuring that all interactions are processed through a common backend and data storage layer. The separation of eAAPI, eCAPI, and PAPI enables independent evolution of external and internal interfaces while maintaining a consistent underlying platform.
+
+## Further Information
+
+- [Glossary](/rl-digital-api-docs/concepts/glossary) 
+
 ---
 
 
@@ -157,5 +173,50 @@ GH --> WS
 5. Architekturentscheidung für DIGIT-2604 vorbereiten
 
 ## Known Bugs
-
 1. Sidebar ist nicht auf allen Seiten
+
+## Navigation
+
+Home
+- Overview
+- Getting Started
+- Architecture
+
+APIs
+- eAAPI
+  - Overview
+  - Getting Started
+  - API Reference
+  - Integration Guide
+  - Release Notes
+  - Changelog
+│
+- eCAPI
+  - Overview
+  - Getting Started
+  - API Reference
+    - v2
+    - v1
+  - Migration Guide
+  - Release Notes
+  - Changelog
+
+- PAPI
+  - Overview
+  - Architecture
+  - API Reference
+  - Release Notes
+  - Changelog
+
+- Shared Documentation
+  - Architecture
+  - Security
+  - Versioning
+  - Release Notes
+  - Changelog
+  - Developer Resources
+
+- Support
+  - FAQ
+  - Troubleshooting
+  - Contact
