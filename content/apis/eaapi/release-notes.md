@@ -1,6 +1,7 @@
 ---
 title: "Release Notes"
 weight: 20
+type: docs
 ---
 
 # eAAPI v1.0.0

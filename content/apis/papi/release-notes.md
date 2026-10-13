@@ -1,8 +1,9 @@
 ---
 title: "Release Notes"
 weight: 20
+type: docs
 ---
 
 ## Unreleased
 
-- Initiale Struktur für PAPI.
+- Initial Structure of  PAPI.

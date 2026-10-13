@@ -1,6 +1,7 @@
 ---
 title: "Migration von eCAPI v1 nach v2"
 weight: 30
+type: docs
 ---
 
 # Migration von eCAPI v1 nach v2

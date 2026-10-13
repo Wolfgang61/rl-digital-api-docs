@@ -2,6 +2,7 @@
 title: "Example: Successful ePIL Submission"
 linkTitle: "Example Workflow"
 weight: 15
+type: docs
 description: "Complete curl walkthrough of a successful ePIL submission via eAAPI v1."
 ---
 
@@ -14,13 +15,18 @@ This walkthrough demonstrates a fully successful ePIL submission via eAAPI v1:
 - Checking the processing status
 - Evaluating the result
 
-The complete endpoint and schema documentation is available in [OpenAPI Documentationrerequisites
+The complete endpoint and schema documentation is available in /apis/eaapi/v1/.
+
+## Prerequisites
 
 | Value | Description |
 | --- | --- |
 | `BASE_URL` | Environment base URL, e.g. `https://qa-digital.systems-tooling.de` |
 | `CLIENT_ID` / `CLIENT_SECRET` | OAuth2 client credentials of the submitting tenant |
-| ePIL file | FHIR Bundle according to the [ePIL FHIR Implementation Guide](https://fhir.pharmaprotect.de/digital/epil-fL="https://qa-digital.systems-tooling.de"
+| ePIL file | FHIR Bundle according to the https://fhir.pharmaprotect.de/digital/epil-fhir-ig/ |
+
+```bash
+export BASE_URL="https://qa-digital.systems-tooling.de"
 export CLIENT_ID="<client_id>"
 export CLIENT_SECRET="<client_secret>"
 ```

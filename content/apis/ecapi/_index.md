@@ -1,6 +1,7 @@
 ---
 title: "eCAPI"
 weight: 20
+type: docs
 cascade:
   toc: true
 ---

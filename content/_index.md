@@ -2,6 +2,7 @@
 title: "EPL API Documentation"
 linkTitle: "Home"
 weight: 10
+type: docs
 cascade:
   toc: true
 ---

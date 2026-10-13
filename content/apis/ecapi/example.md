@@ -2,6 +2,7 @@
 title: "Example: Using eCAPI v2"
 linkTitle: "Usage Example"
 weight: 15
+type: docs
 description: "Complete curl walkthrough for searching and retrieving an ePIL with eCAPI v2."
 ---
 

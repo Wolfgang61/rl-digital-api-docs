@@ -2,6 +2,7 @@
 title: "eCAPI Release Notes"
 linkTitle: "Release Notes"
 weight: 50
+type: docs
 description: >
   Release history and lifecycle information for the Electronic Consumer API (eCAPI).
 ---

@@ -3,6 +3,7 @@ title: "eAAPI"
 linkTitle: "eAAPI"
 weight: 10
 description: "Electronic Author API"
+type: docs
 cascade:
   toc: true
 ---
