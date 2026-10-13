@@ -174,6 +174,7 @@ GH --> WS
 
 ## Known Bugs
 1. Sidebar ist nicht auf allen Seiten
+2. rl-digital-api-docs/apis/ contains unwanted generated content
 
 ## Navigation
 
@@ -220,3 +221,53 @@ APIs
   - FAQ
   - Troubleshooting
   - Contact
+- ---
+
+# Evaluation der Site https://wolfgang61.github.io/rl-digital-api-docs/ (DIGIT-2604)
+
+Die Prüfung der Dokumentationsseite [wolfgang61.github.io/rl-digital-api-docs/](https://wolfgang61.github.io/rl-digital-api-docs/) im Hinblick auf das Ticket **DIGIT-2604** (Evaluierung von Hugo + Docsy zur Neustrukturierung der API-Dokumentation) ergibt folgendes Bild:
+
+---
+
+### 1. Hintergrund & Zielsetzung laut Website
+Der genannte Prototyp dient der **Evaluierung von Hugo und dem Docsy-Theme** zur Neustrukturierung der internen und externen API-Dokumentation für das *Electronic Product Leaflet (EPL)*-Projekt (RL Digital).
+
+---
+
+### 2. Bewertete Funktionen & PoC-Ergebnisse
+Im internen Bereich der Startseite sind die Evaluationskriterien und deren aktueller Status wie folgt dokumentiert:
+
+* **Hugo Evaluation:** ✅ (Erfolgreich bewertet)
+* **Docsy Evaluation:** ✅ (Erfolgreich bewertet)
+* **OpenAPI Integration:** ✅ (Erfolgreich integriert)
+* **Mermaid Integration:** ✅ (Unterstützung für Architektur-Diagramme gegeben, wie im Hauptteil zu sehen)
+* **Versionskonzept:** ✅ (Vorhanden, z. B. bei eCAPI v1/v2)
+* **Suchfunktion (Volltextsuche):** ✅ (Implementiert)
+* **Hosting & CI/CD:** ✅ (Über GitHub Actions auf GitHub Pages bereitgestellt)
+* **Git-basierte Zusammenarbeit:** ✅ (Gegeben durch den Tech-Stack)
+
+---
+
+### 3. Technische Architektur des PoC
+* **Quellen:** OpenAPI-Spezifikationen, Markdown-Dateien und Mermaid-Diagramme.
+* **Build-Pipeline:** Hugo in Kombination mit dem Docsy-Theme.
+* **Deployment:** Automatisierter Workflow über **GitHub Actions** (`GH`) auf das Dokumentationsportal (`WS`).
+
+---
+
+### 4. Aktuelle Mängel / Known Bugs
+* **Sidebar:** Ein bekannter Bug ist dokumentiert: *„Sidebar ist nicht auf allen Seiten“* (muss im Rahmen des Layout-Tunings für Docsy noch behoben werden).
+
+---
+
+### 5. Nächste Schritte laut Dokumentation
+1. Versionierung finalisieren
+2. OpenAPI-Automatisierung tiefer integrieren
+3. GitHub Actions Pipelines vervollständigen
+4. Hosting-Konzept dokumentieren
+5. **Architekturentscheidung für DIGIT-2604 vorbereiten**
+
+---
+
+### Fazit
+Der Proof of Concept (PoC) im Rahmen von **DIGIT-2604** ist weit fortgeschritten und zeigt eine funktionierende, automatisierte Toolchain (Hugo/Docsy/GitHub Actions) für das EPL-API-Dokumentationsportal. Abgesehen von kleineren UI-Mängeln (wie der Sidebar) sind alle Kernanforderungen erfolgreich evaluiert.

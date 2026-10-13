@@ -2,8 +2,8 @@
 title: "APIs"
 weight: 1
 type: docs
+toc: false
 ---
-
 # EPL APIs and Technology Overview
 
 The **Electronic Product Leaflet (EPL) Platform** is a digital ecosystem designed to support the creation, management, publication, and consumption of electronic product information (ePI) for pharmaceutical products in Germany.
@@ -49,20 +49,22 @@ The APIs collectively support the EPL vision of providing a centralized, secure,
 
 ## APIs
 
-### eAAPI
+## eAAPI
 
 **Electronic Author API** for the maintenance and provision of product information.
 
 👉 [eAAPI](/rl-digital-api-docs/apis/eaapi/)
 
-### eCAPI
+## eCAPI
 
 **Consumer API** for retrieving product information.
 
 👉 [eCAPI](/rl-digital-api-docs/apis/ecapi/)
 
-### PAPI
+## PAPI
 
 **Portal API** for portal and administrative functions.
 
 👉 [PAPI](/rl-digital-api-docs/apis/papi/)
+
+
