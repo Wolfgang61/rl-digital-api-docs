@@ -3,6 +3,8 @@ title: "APIs"
 weight: 1
 type: docs
 toc: false
+hide_summary: true
+no_list: true
 ---
 # EPL APIs and Technology Overview
 

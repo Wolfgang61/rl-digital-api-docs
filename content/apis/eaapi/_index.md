@@ -22,7 +22,7 @@ Electronic Author API for managing product information.
 
 The Electronic Author API (eAAPI) enables the creation, maintenance, and publication of product information within the EPL platform.
 
-## Architectur
+## Architecture
 
 ```mermaid
 flowchart LR
@@ -31,7 +31,7 @@ Client --> eAAPI
 eAAPI --> ProductData
 ```
 
-# Product Information Submission Process
+## Product Information Submission Process
 
 The Product Information Submission Process describes how pharmaceutical companies and service providers submit product information to the EPL platform through the eAAPI. Submitted metadata and document references are validated, stored in the document repository, and processed asynchronously for publication. Invalid submissions are rejected with detailed validation errors, while valid submissions are accepted and processed through the platform's event-driven architecture.
 

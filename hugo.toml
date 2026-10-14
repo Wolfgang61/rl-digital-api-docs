@@ -1,13 +1,18 @@
 baseURL = "https://wolfgang61.github.io/rl-digital-api-docs/"
 title = "Electronic Product Leaflet API Documentation"
 
-defaultContentLanguage = "de"
+defaultContentLanguage = "en"
+
+[languages]
+  [languages.en]
+    languageName = "English"
+    weight = 1
 
 enableRobotsTXT = true
 enableGitInfo = true
 
 [params]
-  copyright = "EPL"
+  copyright = "PharmaProtect Solutions GmbH"
   github_repo = "https://github.com/Wolfgang61/rl-digital-api-docs"
   github_project_repo = "https://github.com/Wolfgang61/rl-digital-api-docs"
   robots = "noindex, nofollow"
