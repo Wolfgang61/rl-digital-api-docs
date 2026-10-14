@@ -35,6 +35,35 @@ The documentation portal is built using:
 - **GitHub Pages** for hosting and deployment
 - **GitHub Actions** for automated build and release processes
 
+
+```mermaid
+flowchart LR
+
+subgraph Sources
+    OA[OpenAPI Specs]
+    MD[Markdown Documentation]
+    MM[Mermaid Diagrams]
+end
+
+subgraph Build
+    HU[Hugo]
+    DO[Docsy]
+end
+
+subgraph Deployment
+    GH[GitHub Actions]
+    WS[documentation portal]
+end
+
+OA --> HU
+MD --> HU
+MM --> HU
+
+HU --> DO
+DO --> GH
+GH --> WS
+```
+
 This approach enables automated documentation generation, version-controlled content management, and a consistent developer experience across all EPL APIs.
 
 ## Benefits

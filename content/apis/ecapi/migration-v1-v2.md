@@ -1,22 +1,22 @@
 ---
-title: "Migration von eCAPI v1 nach v2"
+title: "Migration from eCAPI v1 to v2"
 weight: 30
 type: docs
 ---
 
-# Migration von eCAPI v1 nach v2
+# Migration from eCAPI v1 to v2
 
-## Wichtigste Änderungen
+## Key Changes
 
-| Bereich | eCAPI v1 | eCAPI v2 |
+| Area | eCAPI v1 | eCAPI v2 |
 |----------|----------|----------|
-| Suche | `/v1/pil/search` | `/v2/pil/medicinal-product/search` |
-| Company Logos | nicht vorhanden | verfügbar |
-| Versionsinformationen | `/v1/version` | `/version` |
-| ePIL Abruf | vorhanden | kompatibel |
+| Search | `/v1/pil/search` | `/v2/pil/medicinal-product/search` |
+| Company Logos | Not available | Available |
+| Version Information | `/v1/version` | `/version` |
+| ePIL Retrieval | Available | Compatible |
 
-## Zusammenfassung
+## Summary
 
-eCAPI v2 erweitert die Funktionalität von eCAPI v1 um neue Suchmechanismen für Medicinal Products, zusätzliche Metadaten-Endpunkte (z. B. Company Logos) sowie vereinfachte Versionsendpunkte.
+eCAPI v2 extends the functionality of eCAPI v1 by adding new search mechanisms for medicinal products, additional metadata endpoints (e.g., company logos), and simplified version endpoints.
 
-Die Endpunkte zum Abruf von ePIL-Dokumenten bleiben weitgehend kompatibel, wodurch eine Migration von v1 zu v2 mit geringem Anpassungsaufwand möglich ist.
+The endpoints for retrieving ePIL documents remain largely compatible, allowing a migration from v1 to v2 with minimal adjustment effort.

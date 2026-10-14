@@ -25,8 +25,9 @@ enableGitInfo = true
     sidebar_menu_compact = true
     sidebar_search_disable = false
     breadcrumb_disable = false
-    # Aktiviert Feedback-Buttons
-    feedback = { enable = true, yes = "Yes, this page was helpful!", no = "No, this page needs improvement" }
+
+[params.ui.feedback]
+  enable = false
 
 [markup]
   [markup.goldmark.renderer]
