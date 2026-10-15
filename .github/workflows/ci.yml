@@ -28,6 +28,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Show layouts
+        run: |
+          find layouts -type f | sort
+
+      - name: Show content count
+        run: |
+          find content -name "*.md" | wc -l
+
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
