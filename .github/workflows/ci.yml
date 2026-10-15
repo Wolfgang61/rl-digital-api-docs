@@ -200,7 +200,31 @@ jobs:
           sass test.scss test.css
 
           echo "OK"
-          cat test.css  
+          cat test.css
+          
+      - name: Test Bootstrap SCSS
+        run: |
+          cat > test-bootstrap.scss <<'EOF'
+          @import "bootstrap/scss/bootstrap";
+          EOF
+
+          npx sass \
+            --load-path=node_modules \
+            test-bootstrap.scss:test-bootstrap.css
+
+          ls -l test-bootstrap.css
+
+      - name: Test FontAwesome SCSS
+        run: |
+          cat > test-fa.scss <<'EOF'
+          @import "@fortawesome/fontawesome-free/scss/fontawesome";
+          EOF
+
+          npx sass \
+            --load-path=node_modules \
+            test-fa.scss:test-fa.css
+
+          ls -l test-fa.css
 
       - name: Build website
         env:
