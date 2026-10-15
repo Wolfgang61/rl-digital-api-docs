@@ -122,35 +122,7 @@ Evaluierung von Hugo + Docsy im Rahmen von DIGIT-2604 zur Neustrukturierung der 
 
 
 ## 
-## Architektur
 
-```mermaid
-flowchart LR
-
-subgraph Sources
-    OA[OpenAPI Specs]
-    MD[Markdown Dokumentation]
-    MM[Mermaid Diagramme]
-end
-
-subgraph Build
-    HU[Hugo]
-    DO[Docsy]
-end
-
-subgraph Deployment
-    GH[GitHub Actions]
-    WS[Dokumentationsportal]
-end
-
-OA --> HU
-MD --> HU
-MM --> HU
-
-HU --> DO
-DO --> GH
-GH --> WS
-```
 
 ## PoC-Ergebnis
 

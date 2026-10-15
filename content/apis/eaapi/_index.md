@@ -57,6 +57,7 @@ sequenceDiagram
     end
 ```
 
+
 ## Status Model
 The Status Model describes the lifecycle of a product information document within the EPL platform. After submission through the eAAPI, each document passes through validation and processing stages before either being rejected due to validation issues or successfully published and made available for consumption.
 
