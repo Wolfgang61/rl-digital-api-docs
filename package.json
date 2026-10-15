@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "hugo server --buildDrafts --disableFastRender",
-    "build": "hugo --gc --minify",
+    "build": "hugo --gc --minify --panicOnWarning",
     "clean": "rm -rf public resources .hugo_build.lock",
     "fetch:openapi": "python3 scripts/fetch_openapi.py",
     "validate:openapi": "python3 scripts/validate_openapi.py",
     "check:content": "python3 scripts/check_content.py",
-    "check": "npm run validate:openapi && npm run check:content && hugo --gc --minify"
+    "check": "npm run validate:openapi && npm run check:content && npm run build && npm run test:links",
+    "test:site": "hugo --minify"
   },
   "devDependencies": {
     "autoprefixer": "10.4.21",
@@ -18,3 +19,4 @@
     "sass-embedded": "1.93.2"
   }
 }
+

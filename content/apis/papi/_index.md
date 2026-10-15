@@ -8,9 +8,9 @@ cascade:
 
 The Portal API (PAPI) provides portal-specific and administrative functionality for managing Electronic Product Leaflet (EPL) content and related platform operations.
 
-{{% alert title="Important" color="warning" %}}
+**Note:**
 The business-related content on this page is currently placeholder information and must be validated against the officially approved product documentation.
-{{% /alert %}}
+
 
 ## Documentation
 

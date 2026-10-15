@@ -6,7 +6,7 @@ except ImportError:
     sys.exit("PyYAML fehlt. Installiere: python3 -m pip install -r scripts/requirements.txt")
 root=pathlib.Path(__file__).resolve().parents[1]
 errors=[]
-for path in sorted((root/'static/openapi').glob('*.yaml')):
+for path in sorted((root/'static/openapi').glob('*.json')):
     try:
         data=yaml.safe_load(path.read_text(encoding='utf-8'))
         if not isinstance(data,dict): raise ValueError('Wurzel ist kein Objekt')

@@ -31,9 +31,8 @@ export CLIENT_ID="<client_id>"
 export CLIENT_SECRET="<client_secret>"
 ```
 
-{{% alert title="Note" color="warning" %}}
+**Warning:**
 Client secrets must be stored in a secure secret management solution and must never be committed to repositories, tickets, or logs.
-{{% /alert %}}
 
 ## Step 1: Request an Access Token
 
@@ -140,9 +139,9 @@ Response (`200 OK`) after successful processing:
 }
 ```
 
-{{% alert title="Important" color="warning" %}}
+***Note***
 Processing errors are also returned with HTTP `200`. Success must be determined exclusively from `status == "success"` and not from the HTTP status code.
-{{% /alert %}}
+
 
 ## Step 4: Evaluate the Result
 

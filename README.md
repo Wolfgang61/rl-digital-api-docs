@@ -43,6 +43,7 @@ Die Quell-URLs und Zieldateien stehen in `config/openapi-sources.json`. Die mitg
 ```bash
 npm run check
 npm run build
+npm run test:site
 ```
 
 `npm run check` validiert die OpenAPI-Dateien und Markdown-Inhalte und führt
@@ -60,7 +61,6 @@ GitHub Pages ist in dieser Vorlage nur als PoC-Ziel enthalten. `noindex, nofollo
 ## Struktur
 
 - `content/de/docs/apis`: eAAPI, eCAPI und PAPI
-- `content/de/docs/concepts`: fachliche Semantik
 - `content/de/docs/architecture`: Architektur und Mermaid
 - `content/de/docs/releases`: Versionierung und Release Notes
 - `static/openapi`: OpenAPI-Dateien für die Referenzansicht
