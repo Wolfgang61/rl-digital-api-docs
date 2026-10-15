@@ -176,9 +176,14 @@ jobs:
         run: |
           hugo env
 
-      - name: Build without minify
+      - name: Add Dart Sass to PATH
         run: |
-          hugo --gc --panicOnWarning --logLevel debug
+          echo "$GITHUB_WORKSPACE/node_modules/sass-embedded-linux-x64/dart-sass" >> $GITHUB_PATH
+
+      - name: Verify Dart Sass
+        run: |
+          which sass
+          sass --version
 
       - name: Build website
         env:
