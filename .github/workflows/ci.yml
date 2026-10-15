@@ -134,7 +134,7 @@ jobs:
           npx sass test.scss test.css
 
           echo "RESULT:"
-        cat test.css
+          cat test.css
 
       - name: Verify Frontend Dependencies
         run: |
