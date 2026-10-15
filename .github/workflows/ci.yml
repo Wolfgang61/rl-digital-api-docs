@@ -149,6 +149,18 @@ jobs:
         run: |
           npm ci
 
+      - name: Test Sass Compilation
+        run: |
+          echo '$color:red;body{color:$color}' > test.scss
+          npx sass test.scss test.css
+          cat test.css
+
+      - name: Test Docsy SCSS
+        run: |
+          ls -la assets/scss
+
+          cat assets/scss/_styles_project.scss
+  
       - name: Build website
         env:
           HUGO_ENVIRONMENT: production
