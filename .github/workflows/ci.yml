@@ -185,6 +185,23 @@ jobs:
           which sass
           sass --version
 
+      - name: Test Hugo Dart Sass
+        run: |
+          sass --version
+
+          cat > test.scss <<'EOF'
+          $color: red;
+
+          body {
+            color: $color;
+          }
+          EOF
+
+          sass test.scss test.css
+
+          echo "OK"
+          cat test.css  
+
       - name: Build website
         env:
           HUGO_ENVIRONMENT: production
