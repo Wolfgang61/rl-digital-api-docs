@@ -92,6 +92,14 @@ jobs:
           which hugo
           hugo version
 
+      - name: Install NPM dependencies
+        run: |
+          npm ci
+
+      - name: Verify Dart Sass
+        run: |
+          npx sass --version
+
       - name: Build website
         run: |
           hugo --gc --minify --panicOnWarning
