@@ -142,8 +142,11 @@ jobs:
           ls -la public/apis/eaapi || true
 
           echo "INDEX"
-          test -f public/index.html && echo "FOUND public/index.html"
-
+          if [ -f public/index.html ]; then
+            echo "FOUND public/index.html"
+          else
+            echo "MISSING public/index.html"
+          fi
       - name: Show full Hugo config
         run: |
           hugo config > hugo-config.txt
