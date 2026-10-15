@@ -96,24 +96,15 @@ jobs:
         run: |
           npm ci
 
-      - name: Install Dart Sass
+      - name: Check Sass Embedded
         run: |
-          npm install -g sass
-
-      - name: Verify Dart Sass
-        run: |
-          npx sass --version
+          npm ls sass-embedded
 
       - name: Build website
+        env:
+          HUGO_ENVIRONMENT: production
         run: |
-          hugo --gc --minify --panicOnWarning
-
-          echo "===== IMMEDIATELY AFTER BUILD ====="
-          find public -name "*.html" | wc -l
-          find public -name "*.html" | sort
-
-          echo "===== ROOT ====="
-          ls -la public
+          npm run build
 
       - name: Compare layouts
         run: |
