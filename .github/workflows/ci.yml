@@ -96,6 +96,21 @@ jobs:
         run: |
           hugo --gc --minify --panicOnWarning
 
+      - name: Compare layouts
+        run: |
+          echo "=== LAYOUTS ==="
+          find layouts -type f | sort
+
+          echo "=== DEFAULT ==="
+          ls -la layouts/_default || true
+
+          echo "=== SINGLE ==="
+          cat layouts/_default/single.html || true
+
+          echo "=== LIST ==="
+          cat layouts/_default/list.html || true
+
+
       - name: Show generated output
         run: |
           echo "HTML FILES"
