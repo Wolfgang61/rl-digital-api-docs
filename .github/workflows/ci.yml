@@ -122,7 +122,25 @@ jobs:
             console.log('sass-embedded=',p);
           "
 
+      - name: Test Sass Compilation
+        run: |
+          cat > test.scss <<'EOF'
+          $color: red;
+          body {
+            color: $color;
+          }
+          EOF
 
+          npx sass test.scss test.css
+
+          echo "RESULT:"
+        cat test.css
+
+      - name: Verify Frontend Dependencies
+        run: |
+          npm ls bootstrap
+          npm ls @fortawesome/fontawesome-free
+`
       - name: Build website
         env:
           HUGO_ENVIRONMENT: production
