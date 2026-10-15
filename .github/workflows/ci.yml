@@ -109,7 +109,11 @@ jobs:
           pwd
           ls -la
           ls -la public
-
+          echo "==== HTML ===="
+          find public -name "*.html" | sort
+          echo "==== XML ===="
+          find public -name "*.xml" | sort
+          
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
