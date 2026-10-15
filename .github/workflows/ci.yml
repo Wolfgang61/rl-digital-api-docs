@@ -140,7 +140,7 @@ jobs:
         run: |
           npm ls bootstrap
           npm ls @fortawesome/fontawesome-free
-`
+
       - name: Build website
         env:
           HUGO_ENVIRONMENT: production
