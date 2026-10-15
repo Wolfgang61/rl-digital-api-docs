@@ -96,6 +96,17 @@ jobs:
         run: |
           hugo --gc --minify --panicOnWarning
 
+      - name: Show generated output
+        run: |
+          echo "HTML FILES"
+          find public -name "*.html" | sort
+
+          echo "HTML COUNT"
+          find public -name "*.html" | wc -l
+
+          echo "ROOT"
+          ls -la public
+
       - name: Show Hugo outputs
         run: |
           hugo config | grep -A20 outputs
