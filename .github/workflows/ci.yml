@@ -96,6 +96,13 @@ jobs:
         run: |
           hugo --gc --minify --panicOnWarning
 
+          echo "===== IMMEDIATELY AFTER BUILD ====="
+          find public -name "*.html" | wc -l
+          find public -name "*.html" | sort
+
+          echo "===== ROOT ====="
+          ls -la public
+
       - name: Compare layouts
         run: |
           echo "=== LAYOUTS ==="
