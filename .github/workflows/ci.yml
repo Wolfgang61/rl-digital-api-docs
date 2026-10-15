@@ -130,6 +130,21 @@ jobs:
           echo "==== XML ===="
           find public -name "*.xml" | sort
 
+      - name: Inspect public
+        run: |
+          echo "ROOT"
+          ls -la public
+
+          echo "APIS"
+          ls -la public/apis || true
+
+          echo "EAAPI"
+          ls -la public/apis/eaapi || true
+
+          echo "INDEX"
+          test -f public/index.html && echo "FOUND public/index.html"
+
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
