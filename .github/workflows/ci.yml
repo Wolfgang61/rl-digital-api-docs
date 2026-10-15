@@ -161,6 +161,14 @@ jobs:
 
           cat assets/scss/_styles_project.scss
   
+      - name: Show generated main.scss
+        run: |
+          find resources -type f | grep main.scss || true
+
+      - name: Build without minify
+        run: |
+          hugo --gc --panicOnWarning --logLevel debug
+
       - name: Build website
         env:
           HUGO_ENVIRONMENT: production
