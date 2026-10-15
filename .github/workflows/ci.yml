@@ -88,6 +88,14 @@ jobs:
         run: |
           hugo --gc --minify
 
+      - name: Show Hugo outputs
+        run: |
+          hugo config | grep -A20 outputs
+
+      - name: Show loaded modules
+        run: |
+          hugo mod graph
+
       - name: Show generated files
         run: |
           find public -maxdepth 3 -type f | sort
@@ -113,7 +121,7 @@ jobs:
           find public -name "*.html" | sort
           echo "==== XML ===="
           find public -name "*.xml" | sort
-          
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
