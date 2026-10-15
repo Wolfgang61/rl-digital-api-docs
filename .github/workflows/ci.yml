@@ -111,6 +111,18 @@ jobs:
         run: |
           hugo env
 
+      - name: Inspect Sass binaries
+        run: |
+          which sass || true
+          npx sass --version
+          ls -l node_modules/.bin | grep sass || true
+
+          node -e "
+            const p=require.resolve('sass-embedded');
+            console.log('sass-embedded=',p);
+          "
+
+
       - name: Build website
         env:
           HUGO_ENVIRONMENT: production
