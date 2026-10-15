@@ -86,7 +86,7 @@ jobs:
 
       - name: Build website
         run: |
-          hugo --gc --minify
+          hugo --gc --minify --panicOnWarning
 
       - name: Show Hugo outputs
         run: |
