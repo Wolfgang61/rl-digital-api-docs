@@ -141,6 +141,14 @@ jobs:
           npm ls bootstrap
           npm ls @fortawesome/fontawesome-free
 
+      - name: Sync Hugo npm metadata
+        run: |
+          hugo mod npm pack
+
+      - name: Install NPM dependencies
+        run: |
+          npm ci
+
       - name: Build website
         env:
           HUGO_ENVIRONMENT: production
