@@ -144,6 +144,15 @@ jobs:
           echo "INDEX"
           test -f public/index.html && echo "FOUND public/index.html"
 
+      - name: Show full Hugo config
+        run: |
+          hugo config > hugo-config.txt
+          cat hugo-config.txt
+
+      - name: Show home page outputs
+        run: |
+          find public -maxdepth 2 -type f | sort
+
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
