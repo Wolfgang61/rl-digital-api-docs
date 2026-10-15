@@ -38,8 +38,8 @@ enableGitInfo = true
     style = "github"
     lineNos = false
 
-[outputs]
-  home = ["HTML"]
+#[outputs]
+#  home = ["HTML"]
 
 [taxonomies]
   category = "categories"
