@@ -12,7 +12,7 @@ enableRobotsTXT = true
 enableGitInfo = true
 
 [params]
-  copyright = "PharmaProtect Solutions GmbH"
+  copyright = "Arvato Systems. All rights reserved."
   github_repo = "https://github.com/Wolfgang61/rl-digital-api-docs"
   github_project_repo = "https://github.com/Wolfgang61/rl-digital-api-docs"
   robots = "noindex, nofollow"

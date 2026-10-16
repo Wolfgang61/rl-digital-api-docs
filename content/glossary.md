@@ -2,6 +2,7 @@
 title: "Glossary"
 linkTitle: "Glossary"
 weight: 10
+type: docs
 description: "Terminology and abbreviations used within the EPL platform."
 ---
 

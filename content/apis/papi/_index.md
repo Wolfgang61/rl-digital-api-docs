@@ -2,8 +2,7 @@
 title: "PAPI"
 weight: 30
 type: docs
-cascade:
-  toc: true
+toc: true
 ---
 
 The Portal API (PAPI) provides portal-specific and administrative functionality for managing Electronic Product Leaflet (EPL) content and related platform operations.
@@ -79,18 +78,5 @@ Stores published content and associated document metadata.
 
 Persists job definitions, processing status, audit information, and execution history.
 
-## Future Documentation
 
-The following sections will be added as part of the complete PAPI documentation:
-
-- Overview
-- Authentication and Authorization
-- OpenAPI Specification
-- Swagger UI
-- Administrative Workflows
-- Publication Management
-- Release Notes
-- Changelog
-- Error Handling
-- Architecture Details
 ``

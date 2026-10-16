@@ -97,7 +97,5 @@ The backend services persist and retrieve data from the central Document Store, 
 
 This architecture clearly separates the different consumer groups and their use cases while ensuring that all interactions are processed through a common backend and data storage layer. The separation of eAAPI, eCAPI, and PAPI enables independent evolution of external and internal interfaces while maintaining a consistent underlying platform.
 
-## Further Information
-
-- [Glossary](/rl-digital-api-docs/concepts/glossary) 
-
+**© 2026 Arvato Systems. All rights reserved.
+Use of EPL APIs requires prior authorization and is subject to applicable terms and policies.**
