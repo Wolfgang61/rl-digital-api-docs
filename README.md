@@ -7,7 +7,14 @@ Vollständige Hugo-und-Docsy-Vorlage für DIGIT-2604. Sie kombiniert technische 
 - Git
 - Go 1.22 oder neuer
 - Node.js 22.12 oder neuer
-- Hugo Extended 0.147.5
+- Hugo (extended, v0.167.7): static site generator.
+- Docsy (v0.18.0): Hugo theme, used as a Hugo Module.
+- OpenAPI specs: the source of truth for the API docs.
+- Swagger UI: renders the OpenAPI specs, integrated through shortcodes.
+- Node.js / npm: builds the SCSS and CSS with Sass, PostCSS and Autoprefixer.
+- Python (PyYAML): scripts that fetch and validate the  OpenAPI specs and check content.
+- Mermaid: diagrams in the docs.
+- GitHub Actions (GitHub Pages): CI and deployment.
 
 Docsy wird als versioniertes Hugo Module eingebunden. Ein lokaler Theme-Checkout
 oder ein Git-Submodul ist nicht erforderlich.
